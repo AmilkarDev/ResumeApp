@@ -1,0 +1,281 @@
+﻿@model IEnumerable<ResumeApp.Models.ApplicationUser>
+@using ResumeApp.Models;
+@{
+    ViewBag.Title = "Mailing";
+}
+<div class="row" style="margin:15px">
+    <div class="col-md-6">
+        @*<h2>Mailing</h2>*@
+        @{
+            Html.RenderAction("listFiles", "Home");
+        }
+        <h2 class="alert alert-danger"> Select Recipients</h2>
+        <table class="table" id="users">
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FullName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Email)
+                </th>
+                <th> select </th>
+            </tr>
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FullName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.CheckBox(item.Email)
+                    </td>
+                </tr>
+            }
+
+        </table>
+        <button class="btn btn-primary" id="preview" onclick="validate()" style="display:inline;">Preview Full Email</button>
+        <button class="btn btn-primary" id="preview" onclick="Sendito()" style="display:inline;">Send Email</button>
+
+    </div>
+    <div class="col-md-6">
+        <h2>Recipients</h2>
+        <b style="display:inline;">To : </b> <h4 id="principalRecipient" style="display:inline;"></h4><br />
+        <b>CC : </b>
+        <table id="ccs" class="table"></table>
+        <h2 style="display:inline;">Subject : </h2><h4 id="subject" style="display:inline;"></h4>
+        <h2>Email Content</h2>
+        <iframe id="content" src="~/EmailTemplates/email.html" style="width:700px; height:500px;" frameborder="0"> </iframe>
+        <div id="editora" style="visibility:hidden" >
+
+        </div>
+        <h2>Attachments</h2>
+        <table id="atts" class="table"></table>
+    </div>
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="https://cdn.ckeditor.com/4.13.1/standard-all/ckeditor.js"></script>
+<script>
+    //$(document).ready(function () {
+        var chks = document.querySelectorAll("#users input[type='checkbox']");
+        //console.log(chks);
+        //alert(jQuery.fn.jquery);
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_flat',
+            radioClass: 'iradio_flat'
+        });
+    //});
+
+
+
+    $('input[type=radio][name=cvType]').change(function () {
+        if (this.value == 'manualEmail') {
+            alert("Allot Thai Gayo Bhai");
+        }
+        //else if (this.value == 'transfer') {
+        //    alert("Transfer Thai Gayo");
+        //}
+    });
+    //$(document).ready(function () {
+    //$('input').iCheck('check', function () {
+    //    alert('Well done, Sir');
+    //});
+    //});
+    var editora, html = ''; var config = {};
+    $('.iradio_flat').on('ifChecked', function (event) {
+        var col = $('input[name=cvType]:checked').val();
+        //$('#content').attr('src', "http://localhost:12964/EmailTemplates/manualEmail.html");
+       // alert('Hello World ' + col);
+
+
+
+        if (col == "cvtoColleague") {
+            $("#subject").text("Reviewing CVS");
+            $("div[id*='cke_editor']").hide();
+            document.getElementById('content').style.display = '';
+            $('#content').attr('src', "http://localhost:12964/EmailTemplates/email1.html");
+        }
+        else {
+            if (col == "cvtoClient") {
+                $("#subject").text("Suggested CVS");
+                $("div[id*='cke_editor']").hide();
+                document.getElementById('content').style.display = '';
+                $('#content').attr('src', "http://localhost:12964/EmailTemplates/email2.html");
+            }
+            else {
+                $("#subject").text("Traitement des CVS");                
+                if(!editora) editora = CKEDITOR.replace('editora');
+                $("div[id*='cke_editor']").show();
+                document.getElementById('content').style.display = 'none';
+                document.getElementById('editora').style.display = '';
+                //document.getElementById('editor1').style.display = '';
+                //editora = CKEDITOR.replace('editor1');
+                // editor1 = CKEDITOR.appendTo('editor1', config, html);
+               // $('#content').attr('src', "http://localhost:12964/EmailTemplates/manualEmail.html");
+
+            }
+
+        }
+    });
+
+
+
+    function validate() {
+
+       // console.log(editora.getData());
+
+        var chks = document.querySelectorAll("#files input[type='checkbox']");
+        var values = [];
+        //console.log(values);
+        var result = Array.prototype.every.call(chks, function (c) {
+            if (c.checked) values.push(c.name);
+            return c.value;
+        });
+       // console.log(values);
+
+        
+        var chks = document.querySelectorAll("#users input[type='checkbox']");
+        var val = [];
+       // console.log(val);
+        var res = Array.prototype.every.call(chks, function (c) {
+            if (c.checked) val.push(c.name);
+            return c.value;
+        });
+        //console.log(val);
+
+
+       
+       
+        var col = $('input[name=cvType]:checked').val();
+        //console.log('col=', col);
+        var fullEmail = new Object();
+        fullEmail.Attachments = values  ;
+        fullEmail.Recipients = val;
+        fullEmail.Template = col;
+
+        $('#principalRecipient').text(val[0]);
+        $('#ccs tbody').empty();
+        var tbody = $('#ccs');
+        for (var i = 1; i < val.length; i++) {
+            tbody.append('<tr> <td>' + val[i] + '</td></tr>');
+        }
+
+        $('#atts tbody').empty();
+        var tbodyy = $('#atts');
+        for (var i = 0; i < values.length; i++) {
+            tbodyy.append('<tr> <td>' + values[i] + '</td></tr>');
+        }
+        //var vala = null;
+        //if (col == "cvtoColleague") {
+        //    $("#subject").text("Reviewing CVS");
+        //    $('#content').attr('src', "http://localhost:12964/EmailTemplates/email1.html");
+        //    vala = document.getElementById('content').contentWindow.document.documentElement.outerHTML;
+        //}
+        //else {
+        //    if (col == "cvtoClient") {
+        //        $("#subject").text("Suggested CVS");
+        //        $('#content').attr('src', "http://localhost:12964/EmailTemplates/email2.html"); 
+        //        vala = document.getElementById('content').contentWindow.document.documentElement.outerHTML;
+        //    }
+        //    else {
+        //        $("#subject").text("Traitement des CVS");
+        //        $('#content').attr('src', "http://localhost:12964/EmailTemplates/manualEmail.html");
+        //         vala = document.getElementById('content').contentWindow.document.documentElement.outerHTML;
+        //    }
+            
+        //}
+        //console.log(vala);
+        //if (fullEmail != null) {
+        //    $.ajax({
+        //        type: "POST",
+        //        url: "/Home/SendEmail",
+        //        data: JSON.stringify(fullEmail),
+        //        contentType: "application/json; charset=utf-8",
+        //        dataType: "json",
+        //        success: function (response) {
+        //            if (response != null) {
+        //               // alert(response);
+        //            } else {
+        //                alert("Something went wrong");
+        //            } 
+        //        },
+        //        failure: function (response) {
+        //            alert(response.responseText);
+        //        },
+        //        error: function (response) {
+        //            alert(response.responseText);
+        //        }
+        //    });
+        //}  
+        
+    }   
+    function Sendito() {
+        var chks = document.querySelectorAll("#files input[type='checkbox']");
+        var values = [];
+        //console.log(values);
+        var result = Array.prototype.every.call(chks, function (c) {
+            if (c.checked) values.push(c.name);
+            return c.value;
+        });
+        // console.log(values);
+
+
+        var chks = document.querySelectorAll("#users input[type='checkbox']");
+        var val = [];
+        // console.log(val);
+        var res = Array.prototype.every.call(chks, function (c) {
+            if (c.checked) val.push(c.name);
+            return c.value;
+        });
+        //console.log(val);
+
+
+
+
+        var col = $('input[name=cvType]:checked').val();
+       // console.log('col=', col);
+        var fullEmail = new Object();
+        fullEmail.Attachments = values;
+        fullEmail.Recipients = val;
+        fullEmail.Subject = col;
+        //const vala = editor.getData();
+        
+        if (col == 'manualEmail') {
+            var vala = editora.getData();
+            fullEmail.EmailContent = vala;
+        }
+        
+        //console.log(vala);
+
+
+        if (fullEmail != null) {
+            $.ajax({
+                type: "POST",
+                url: "/Home/SendEmail",
+                data: JSON.stringify(fullEmail),
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function (response) {
+                    if (response != null) {
+                         alert(response);
+                    } else {
+                        alert("Something went wrong");
+                    }
+                },
+                failure: function (response) {
+                    alert(response.responseText);
+                },
+                error: function (response) {
+                    alert(response.responseText);
+                }
+            });
+        }  
+
+    }
+  
+</script>

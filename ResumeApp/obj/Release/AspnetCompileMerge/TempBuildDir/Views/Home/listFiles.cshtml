@@ -1,0 +1,40 @@
+﻿@model IEnumerable<ResumeApp.Models.CvFile>
+
+<h2 class="alert alert-danger">select cvs to transfer</h2>
+<table class="table" id="files">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.fileName)
+        </th>
+    </tr>
+        @foreach (var item in Model)
+        {
+    <tr class="files">
+        <td>
+            @Html.CheckBox(item.fileName)
+        @Html.DisplayFor(modelItem => item.fileName)
+        </td>
+        @*<td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>*@
+    </tr>
+        }
+
+</table>
+<h2 class="alert alert-danger">select Email Template</h2>
+<table id="cvs">
+    <tr>
+        CV to Colleague
+        @Html.RadioButton("cvType", "cvtoColleague")
+    </tr>
+    <tr>
+        cv to Client
+        @Html.RadioButton("cvType", "cvtoClient")
+    </tr>
+    <tr>
+        Manually written email
+        @Html.RadioButton("cvType", "manualEmail",new { @id="checka"})
+    </tr>
+</table>

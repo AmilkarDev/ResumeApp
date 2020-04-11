@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>CKeditor test</title>
+    <script src="https://cdn.ckeditor.com/4.13.1/standard-all/ckeditor.js"></script>
+</head>
+<body>
+    <h2>Manual Email</h2>
+    <div>
+
+        <div id="editor1" contenteditable="true">
+            <p>felfel ma9li.</p>
+        </div>
+        <button class="btn btn-primary" onclick="getData()">Save Data</button>
+    </div>
+
+   
+    <script type="text/javascript">
+        var editor1;
+         editor1 =CKEDITOR.replace('editor1');
+      //var editor1 = ClassicEditor
+      //      .create(document.querySelector('#editor'))
+      //      .then(editor => {
+      //          // console.log(editor);
+      //          //editor.model.document.on('change:data', () => {
+      //          //    console.log(editor.getData());
+      //          //});
+                
+      //      })
+      //      .catch(error => {
+      //          console.error(error);
+      //      });
+
+        function getData() {
+            // editor1.getData();
+           // var data = editorr.getData();
+            console.log(editor1.getData());
+        }
+
+        //ClassicEditor.model.document.on('change:data', () => {
+        //    console.log(ClassicEditor.getData());
+        //});
+
+        //console.log(ClassicEditor.getData());
+        //console.log(editor.getData());
+       
+    </script>
+</body>
+</html>
