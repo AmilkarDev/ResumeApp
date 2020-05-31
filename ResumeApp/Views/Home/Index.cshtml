@@ -418,3 +418,9 @@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+<script>
+    $(document).ready(function () {
+        $('.navbar-nav li a.active').removeClass('active');
+        $(".navbar-nav li a[href='/']").addClass('active');
+    });
+</script>

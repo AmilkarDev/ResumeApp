@@ -69,6 +69,27 @@ namespace ResumeApp.Models
         {
             return new ApplicationDbContext();
         }
+        public DbSet<CvFile> CvFiles { get; set; }
+        public DbSet<Profile> Profiles { get; set; }
+        public DbSet<Entity> Entities { get; set; }
+        public DbSet<KeyPhrase> KeyPhrases { get; set; }
+        public DbSet<Skill> Skills { get; set; }
+        public DbSet<Country> Countries { get; set; }
+        public DbSet<Title> Titles { get; set; }
+        public DbSet<Tool> Softwares { get; set; }
+        public DbSet<KnowledgeBase> KnowledgeBases { get; set; }
+        public DbSet<Language> Languages { get; set; }
+
+
+
+        //protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        //{
+        //    modelBuilder.Entity<Entity>()
+        //        .HasRequired<Profile>(p=>p.Profile)
+        //        .WithMany()
+        //        .WillCascadeOnDelete(true);
+        //}
+
 
         //public System.Data.Entity.DbSet<ResumeApp.Models.ApplicationUser> ApplicationUsers { get; set; }
 

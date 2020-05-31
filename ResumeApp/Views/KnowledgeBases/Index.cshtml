@@ -1,0 +1,233 @@
+﻿@model IEnumerable<ResumeApp.Models.KnowledgeBase>
+@using System.Linq
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<div class="Insider">
+    <div id="kbDiv">
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Ajouter une langue" id="newLanguage" disabled>
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" onclick="AddLanguage()">Ajouter</button>
+                </span>
+            </div>
+            <br />
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">Langues</div>
+                <div class="panel-body" id="languages">
+                    <p id="ttl">Séléctionner une Base de connaissance</p>
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-info" onclick="saveLanguages()"> Enregistrer </button>
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <div class="col-md-3">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Ajouter un pays" id="newCountry" disabled>
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" onclick="AddCountry()">Ajouter</button>
+                </span>
+            </div>
+            <br />
+            <div class="panel panel-primary">
+                <div class="panel-heading">Pays</div>
+                <div class="panel-body" id="countries">
+                    <p id="tt">Séléctionner une Base de connaissance</p>
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-info" onclick="saveCountries()"> Enregistrer </button>
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <div class="col-md-3">
+
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Ajouter un outils" id="newTool" disabled>
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" onclick="AddTool()">Ajouter</button>
+                </span>
+            </div>
+            <br />
+            <div class="panel panel-primary">
+                <div class="panel-heading">Outils</div>
+                <div class="panel-body" id="tools">
+                    <p id="ttTool">Séléctionner une Base de connaissance</p>
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-info" onclick="saveTools()"> Enregistrer </button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-3">
+
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Ajouter une compétence" id="newSkill" disabled>
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" onclick="AddSkill()">Ajouter</button>
+                </span>
+            </div>
+            <br />
+            <div class="panel panel-primary">
+                <div class="panel-heading">Compétences</div>
+                <div class="panel-body" id="skills">
+                    <p id="tts">Séléctionner une Base de connaissance</p>
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-info" onclick="saveSkills()"> Enregistrer </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4"></div>
+        <div class="col-md-4">
+
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Ajouter un Titre " id="newTitle" disabled>
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" onclick="AddTitle()">Ajouter</button>
+                </span>
+            </div>
+            <br />
+            <div class="panel panel-primary">
+                <div class="panel-heading">Titres</div>
+                <div class="panel-body" id="titles">
+                    <p id="ttt">Séléctionner une Base de connaissance</p>
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-info" onclick="saveTitles()" data-izimodal-open="#modall" data-izimodal-transitionin="fadeInDown" > Enregistrer </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <button class="btn btn-info trigger"   data-izimodal-open="#modall" data-izimodal-transitionin="fadeInDown"> Enregistrer </button>
+
+        </div>
+    </div>
+
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">×</button>
+                <h4 class="modal-title" id="myModalLabel">gestion des bases de connaissance</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label for="EmployeeId">ID</label>
+                        <input type="text" class="form-control" id="kbId" placeholder="Id" disabled="disabled" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Name">Nom</label>
+                        <input type="text" class="form-control" id="Name" placeholder="Name" />
+                    </div>
+                    <div class="form-group">
+                        <label for="Age">Description</label>
+                        <input type="text" class="form-control" id="Description" placeholder="Description" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnAdd" onclick="return Addkb();">Ajouter</button>
+                <button type="button" class="btn btn-primary" id="btnUpdate" style="display:none;" onclick="Update();">Modifier</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<div id="modall">
+    <!-- data-iziModal-fullscreen="true"  data-iziModal-title="Welcome"  data-iziModal-subtitle="Subtitle"  data-iziModal-icon="icon-home" -->
+    <!-- Modal content -->
+</div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+<script src="~/Content/iCheck/icheck.js"></script>
+<link href="~/Content/iCheck/flat/flat.css" rel="stylesheet" />
+<link href="~/Content/iziToast-master/iziToast-master/dist/css/iziToast.min.css" rel="stylesheet" />
+<script src="~/Content/iziToast-master/iziToast-master/dist/js/iziToast.min.js"></script>
+<script>
+
+    $(document).ready(function () {
+        $("#kbDiv").load("/KnowledgeBases/listKb");
+            $('.navbar-nav li a.active').removeClass('active');
+        $(".navbar-nav li a[href='/KnowledgeBases']").addClass('active');
+
+    });
+
+    // Attach Button click event listener
+    //$("#myBtn").click(function () {
+    //    $('#myModal').modal('show');
+    //});
+    //Load Data function
+
+
+    //Add Data Function
+    //function Add() {
+    //    var res = validate();
+    //    if (res == false) {
+    //        return false;
+    //    }
+    //    var KbObj = {
+    //        Name: $('#Name').val(),
+    //        Description: $('#Description').val(),
+    //    };
+    //    $.ajax({
+    //        url: "/KnowledgeBases/Add",
+    //        data: JSON.stringify(KbObj),
+    //        type: "POST",
+    //        contentType: "application/json;charset=utf-8",
+    //        dataType: "json",
+    //        success: function (result) {
+    //            loadData();
+    //            $('#myModal').modal('hide');
+    //        },
+    //        error: function (errormessage) {
+    //            alert(errormessage.responseText);
+    //        }
+    //    });
+    //}
+
+    ////Valdidation using jquery
+
+    //function validate() {
+    //    var isValid = true;
+    //    if ($('#Name').val().trim() == "") {
+    //        $('#Name').css('border-color', 'Red');
+    //        isValid = false;
+    //    }
+    //    else {
+    //        $('#Name').css('border-color', 'lightgrey');
+    //    }
+    //    return isValid;
+
+    //}
+</script>

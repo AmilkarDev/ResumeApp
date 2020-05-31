@@ -1,0 +1,563 @@
+﻿
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+
+<div class="Insider">
+    <div class="row">
+        <fieldset>
+            <legend>Mots clés</legend>
+            <input type="text" id="SearchKeyPhrase" data-provide="typeahead" placeholder="Mots clés" autocomplete="off" class="form-control" />
+            <div id="keyPhrase"></div>
+        </fieldset>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <fieldset>
+                <legend>Compétences</legend>
+                <input type="text" id="Search" data-provide="typeahead" placeholder="compétences" autocomplete="off" class="form-control" />
+                <div id="skill"></div>
+            </fieldset>
+        </div>
+        <div class="col-md-4">
+            <fieldset>
+                <legend>Titres</legend>
+                <input type="text" id="SearchTitle" data-provide="typeahead" placeholder="Titres" autocomplete="off" class="form-control" />
+                <div id="title"></div>
+            </fieldset>
+        </div>
+        <div class="col-md-4">
+            <fieldset>
+                <legend>Outils</legend>
+                <input type="text" id="searchTool" data-provide="typeahead" placeholder="Outils" autocomplete="off" class="form-control" />
+                <div id="tool"></div>
+            </fieldset>
+        </div>
+    </div>
+    <br />
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <fieldset>
+                <legend>Pays</legend>
+                <input type="text" id="SearchCountry" data-provide="typeahead" placeholder="pays" autocomplete="off" class="form-control" />
+                <div id="country"></div>
+            </fieldset>
+        </div>
+        <div class="col-md-4">
+            <fieldset>
+                <legend>Organisations</legend>
+                <input type="text" id="SearchOrganization" data-provide="typeahead" placeholder="organisations" autocomplete="off" class="form-control" />
+                <div id="organization"></div>
+            </fieldset>
+        </div>
+        <div class="col-md-4">
+            <fieldset>
+                <legend>Locations</legend>
+                <input type="text" id="SearchLocation" data-provide="typeahead" placeholder="Locations" autocomplete="off" class="form-control" />
+                <div id="location"></div>
+            </fieldset>
+        </div>
+    </div>
+    <br />
+
+
+    <div class="row">
+        <div class="col-md-4">
+            <fieldset>
+                <legend>Email</legend>
+                <input type="text" id="SearchEmail" data-provide="typeahead" placeholder="Email" autocomplete="off" class="form-control" />
+                <div id="email"></div>
+            </fieldset>
+        </div>
+        <div class="col-md-4">
+            <fieldset>
+                <legend>Nom</legend>
+                <input type="text" id="SearchName" data-provide="typeahead" placeholder="Noms" autocomplete="off" class="form-control" />
+                <div id="name"></div>
+            </fieldset>
+        </div>
+        <div class="col-md-4">
+            <fieldset>
+                <legend>Langues</legend>
+                <input type="text" id="SearchLanguage" data-provide="typeahead" placeholder="Langues" autocomplete="off" class="form-control" />
+                <div id="language"></div>
+            </fieldset>
+        </div>
+    </div>
+
+    <br />
+    <div class="panel panel-primary">
+        <div class="panel-heading">éléments de recherche</div>
+        <div class="panel-body" id="final-search"> </div>
+    </div>
+
+
+    <div id="displayFiles">
+
+    </div>
+    <br />
+</div>
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">CV sélectionné</h4>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center;">
+                    <iframe style="width:500px; height:500px;" frameborder="0" id="frima"></iframe>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                @*<button type="button" class="btn btn-primary" onclick="saveFile()">Save file</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">Détails du candidat</h4>
+            </div>
+            <div class="modal-details">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*@section Scripts {
+        @Scripts.Render("~/bundles/jqueryval")
+    }*@
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+<link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+<script src="~/Scripts/bootstrap3-typeahead.min.js"></script>
+<link href="~/Content/iziToast-master/iziToast-master/dist/css/iziToast.min.css" rel="stylesheet" />
+<script src="~/Content/iziToast-master/iziToast-master/dist/js/iziToast.min.js"></script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $('.navbar-nav li a.active').removeClass('active');
+        $(".navbar-nav li a[href='/Search']").addClass('active');
+        $("#displayFiles").load("/search/DisplayFiles");
+
+    });
+    ///// zero row 
+    $("#SearchKeyPhrase").typeahead({
+        source: function (query, process) {
+            var keyPhrases = [];
+            map = {};
+            return $.post('/search/SearchKeyPhrases', { query: query }, function (data) {
+                $.each(data, function (i, keyPhrase) {
+                    map[keyPhrase.value] = keyPhrase;
+                    keyPhrases.push(keyPhrase.value);
+                });
+                process(keyPhrases);
+            });
+        },
+        updater: function (item) {
+            var selectedkPhrase = map[item].data;
+            //$("#title").text("Selected : " + selectedLanguage);
+            $("#final-search").append('<button type="button" class="btn btn-default btn-sm" id="' + selectedkPhrase + '">' + item + '<span class="glyphicon glyphicon-remove-sign" onclick=removeKeyPhrase(this)></span> </button>')
+            $.get("FixSearchKeyPhrases/" + selectedkPhrase, function (data, status) {
+                $("#displayFiles").load("/search/DisplayFiles");
+                $('#SearchKeyPhrase').val('');
+            });
+            return item;
+        }
+    });
+    ////// One row 
+    $("#Search").typeahead({
+        source: function (query, process) {
+            var skills = [];
+            map = {};
+            return $.post('/search/SearchSkills', { query: query }, function (data) {
+                console.log(data);
+                $.each(data, function (i, skill) {
+                    //console.log("skill is " +skill);
+                    map[skill.value] = skill;
+                    skills.push(skill.value);
+                });
+                process(skills);
+            });
+        },
+        updater: function (item) {
+            //console.log("updater item is " + item);
+            var selectedSkill = map[item].data;
+            //$("#skill").text("Selected : " + selectedSkill);
+            $("#final-search").append('<button type="button" class="label label-primary" id="' + selectedSkill + '">' + item + '<span class="glyphicon glyphicon-remove-sign" onclick=removeSkill(this)></span> </button>')
+
+            $.get("FixSearchskills/" + selectedSkill, function (data, status) {
+                $("#displayFiles").load("/search/DisplayFiles");
+                $('#Search').val('');
+            });
+            return item;
+        }
+    });
+    $("#searchTool").typeahead({
+        source: function (query, process) {
+            var tools = [];
+            map = {};
+            return $.post('/search/SearchTools', { query: query }, function (data) {
+                $.each(data, function (i, tool) {
+                    map[tool.value] = tool;
+                    tools.push(tool.value);
+                });
+                process(tools);
+            });
+        },
+        updater: function (item) {
+            var selectedTool = map[item].data;
+            //$("#tool").text("Selected : " + selectedTool);
+            $("#final-search").append('<button type="button" class="btn btn-default" id="' + selectedTool + '">' + item + '<span class="glyphicon glyphicon-remove-sign" onclick=removeTool(this)></span> </button>')
+            $.get("FixSearchTools/" + selectedTool, function (data, status) {
+                $("#displayFiles").load("/search/DisplayFiles");
+                $('#searchTool').removeAttr('value');
+            });
+            return item;
+        }
+    });
+    $("#SearchTitle").typeahead({
+        source: function (query, process) {
+            var titles = [];
+            map = {};
+            return $.post('/search/SearchTitles', { query: query }, function (data) {
+                $.each(data, function (i, title) {
+                    map[title.value] = title;
+                    titles.push(title.value);
+                });
+                process(titles);
+            });
+        },
+        updater: function (item) {
+            var selectedTitle = map[item].data;
+            // $("#title").text("Selected : " + selectedTitle);
+            $("#final-search").append('<button type="button" class="label label-successt" id="' + selectedTitle + '">' + item + '<span class="glyphicon glyphicon-remove-sign" onclick=removeTitle(this)></span> </button>')
+            $.get("FixSearchTitles/" + selectedTitle, function (data, status) {
+                $("#displayFiles").load("/search/DisplayFiles");
+                $('#SearchTitle').val('');;
+            });
+            return item;
+        }
+    });
+    /// second row *********************************************
+    $("#SearchCountry").typeahead({
+        source: function (query, process) {
+            var countries = [];
+            map = {};
+            return $.post('/search/SearchCountries', { query: query }, function (data) {
+                $.each(data, function (i, country) {
+                    map[country.value] = country;
+                    countries.push(country.value);
+                });
+                process(countries);
+            });
+        },
+        updater: function (item) {
+            var selectedCountry = map[item].data;
+            //$("#country").text("Selected : " + selectedCountry);
+            $("#final-search").append('<button type="button" class="label label-success" id="' + selectedCountry + '">' + item + '<span class="glyphicon glyphicon-remove-sign" onclick=removeCountry(this)></span> </button>')
+            $.get("FixSearchCountries/" + selectedCountry, function (data, status) {
+                $("#displayFiles").load("/search/DisplayFiles");
+                $('#SearchCountry').val('');;
+            });
+            return item;
+        }
+    });
+    $("#SearchOrganization").typeahead({
+        source: function (query, process) {
+            var organizations = [];
+            map = {};
+            return $.post('/search/SearchOrganizations', { query: query }, function (data) {
+                $.each(data, function (i, organization) {
+                    map[organization.value] = organization;
+                    organizations.push(organization.value);
+                });
+                process(organizations);
+            });
+        },
+        updater: function (item) {
+            var selectedOrganization = map[item].data;
+            //$("#organization").text("Selected : " + selectedOrganization);
+            $("#final-search").append('<button type="button" class="label label-info" id="' + selectedOrganization + '">' + item + '<span class="glyphicon glyphicon-remove-sign" onclick=removeOrganization(this)></span> </button>')
+            $.get("FixSearchOrganizations/" + selectedOrganization, function (data, status) {
+                $("#displayFiles").load("/search/DisplayFiles");
+                $('#SearchOrganization').val('');;
+            });
+            return item;
+        }
+    });
+    $("#SearchLocation").typeahead({
+        source: function (query, process) {
+            var locations = [];
+            map = {};
+            return $.post('/search/SearchLocations', { query: query }, function (data) {
+                //console.log(data);
+                $.each(data, function (i, location) {
+                    // console.log(i);
+                    map[location.value] = location;
+                    locations.push(location.value);
+                });
+                //console.log(locations);
+                
+                var final = locations.filter((v, i, a) => a.indexOf(v) === i); 
+                //console.log(final);
+                process(final);
+            });
+        },
+        updater: function (item) {
+            var selectedLocation = map[item].data;
+            $("#location").text("Selected : " + selectedLocation);
+            $("#final-search").append('<button type="button" class="label label-warning" id="' + selectedLocation + '">' + item + '<span class="glyphicon glyphicon-remove-sign" onclick=removeLocation(this)></span> </button>')
+            $.get("FixSearchLocations/" + selectedLocation, function (data, status) {
+                $("#displayFiles").load("/search/DisplayFiles");
+                $('#SearchLocation').val('');;
+
+            });
+            return item;
+        }
+    });
+    /////// Third roow ***************************
+    $("#SearchEmail").typeahead({
+        source: function (query, process) {
+            var emails = [];
+            map = {};
+            return $.post('/search/SearchEmails', { query: query }, function (data) {
+                $.each(data, function (i, email) {
+                    map[email.value] = email;
+                    emails.push(email.value);
+                });
+                process(emails);
+            });
+        },
+        updater: function (item) {
+            var selectedEmail = map[item].data;
+            //$("#email").text("Selected : " + selectedEmail);
+            $("#final-search").append('<button type="button" class="label label-danger" id="' + selectedEmail + '">' + item + ' <span class="glyphicon glyphicon-remove-sign" onclick=removeEmail(this)></span></button>')
+            $.get("FixSearchEmails/" + selectedEmail, function (data, status) {
+                $("#displayFiles").load("/search/DisplayFiles");
+                $('#SearchEmail').val('');;
+            });
+            return item;
+        }
+    });
+    $("#SearchName").typeahead({
+        source: function (query, process) {
+            var names = [];
+            map = {};
+            return $.post('/search/SearchNames', { query: query }, function (data) {
+                $.each(data, function (i, name) {
+                    map[name.value] = name;
+                    names.push(name.value);
+                });
+                process(names);
+            });
+        },
+        updater: function (item) {
+            var selectedName = map[item].data;
+            //$("#name").text("Selected : " + selectedName);
+            $("#final-search").append('<button type="button" class="label label-default" id="' + selectedName + '">' + item + '<span class="glyphicon glyphicon-remove-sign" onclick=removeName(this)></span> </button>')
+            $.get("FixSearchNames/" + selectedName, function (data, status) {
+                $("#displayFiles").load("/search/DisplayFiles");
+                $('#SearchName').val('');;
+
+            });
+            return item;
+        }
+    });
+    $("#SearchLanguage").typeahead({
+        source: function (query, process) {
+            var languages = [];
+            map = {};
+            return $.post('/search/SearchLanguages', { query: query }, function (data) {
+                $.each(data, function (i, language) {
+                    map[language.value] = language;
+                    languages.push(language.value);
+                });
+                process(languages);
+            });
+        },
+        updater: function (item) {
+            var selectedLanguage = map[item].data;
+            //$("#title").text("Selected : " + selectedLanguage);
+            $("#final-search").append('<button type="button" class="label label-primary" id="' + selectedLanguage + '">' + item + '<span class="glyphicon glyphicon-remove-sign" onclick=removeLanguage(this)></span> </button>')
+            $.get("FixSearchLanguages/" + selectedLanguage, function (data, status) {
+                $("#displayFiles").load("/search/DisplayFiles");
+                $('#SearchLanguage').val('');;
+            });
+            return item;
+        }
+    });
+
+
+
+
+
+
+    function removeSpan(e) {
+        console.log(e);
+       // e.parentElement.remove();
+    }
+    function removeLanguage(e) {
+        //console.log(e.parentElement.id);
+        $.get("removeLanguage/" + e.parentElement.id, function (data, status) {
+            //console.log(status);
+            success: {
+                iziToast.success({
+                    title: 'Hola',
+                    message: 'Mise à jour des paramètres de recherche !',
+                    icon: 'fa fa-check-square'
+                });
+                $("#displayFiles").load("/search/DisplayFiles");
+            }         
+        });
+         e.parentElement.remove();
+    }
+    function removeName(e) {
+        $.get("removeName/" + e.parentElement.id, function (data, status) {
+            //console.log(status);
+            success: {
+                iziToast.success({
+                    title: 'Hola',
+                    message: 'Mise à jour des paramètres de recherche !',
+                    icon: 'fa fa-check-square'
+                });
+                $("#displayFiles").load("/search/DisplayFiles");
+            }
+        });
+        e.parentElement.remove();
+    }
+    function removeEmail(e) {
+        $.get("removeEmail/" + e.parentElement.id, function (data, status) {
+            //console.log(status);
+            success: {
+                iziToast.success({
+                    title: 'Hola',
+                    message: 'Mise à jour des paramètres de recherche !',
+                    icon: 'fa fa-check-square'
+                });
+            }
+            $("#displayFiles").load("/search/DisplayFiles");
+        });
+        e.parentElement.remove();
+    }
+
+    function removeCountry(e) {
+        $.get("removeCountry/" + e.parentElement.id, function (data, status) {
+            //console.log(status);
+            success: {
+                iziToast.success({
+                    title: 'Hola',
+                    message: 'Mise à jour des paramètres de recherche !',
+                    icon: 'fa fa-check-square'
+                });
+            }
+            $("#displayFiles").load("/search/DisplayFiles");
+        });
+        e.parentElement.remove();
+    }
+
+    function removeOrganization(e) {
+        $.get("removeOrganization/" + e.parentElement.id, function (data, status) {
+            //console.log(status);
+            success: {
+                iziToast.success({
+                    title: 'Hola',
+                    message: 'Mise à jour des paramètres de recherche !',
+                    icon: 'fa fa-check-square'
+                });
+            }
+            $("#displayFiles").load("/search/DisplayFiles");
+        });
+        e.parentElement.remove();
+    }
+    function removeLocation(e) {
+        $.get("removeLocation/" + e.parentElement.id, function (data, status) {
+            //console.log(status);
+            success: {
+                iziToast.success({
+                    title: 'Hola',
+                    message: 'Mise à jour des paramètres de recherche !',
+                    icon: 'fa fa-check-square'
+                });
+            }
+            $("#displayFiles").load("/search/DisplayFiles");
+        });
+        e.parentElement.remove();
+    }
+    function removeSkill(e) {
+        $.get("removeSkill/" + e.parentElement.id, function (data, status) {
+            //console.log(status);
+            success: {
+                iziToast.success({
+                    title: 'Hola',
+                    message: 'Mise à jour des paramètres de recherche !',
+                    icon: 'fa fa-check-square'
+                });
+            }
+            $("#displayFiles").load("/search/DisplayFiles");
+        });
+        e.parentElement.remove();
+    }
+    function removeTitle(e) {
+        $.get("removeTitle/" + e.parentElement.id, function (data, status) {
+            //console.log(status);
+            success: {
+                iziToast.success({
+                    title: 'Hola',
+                    message: 'Mise à jour des paramètres de recherche !',
+                    icon: 'fa fa-check-square'
+                });
+            }
+            $("#displayFiles").load("/search/DisplayFiles");
+        });
+        e.parentElement.remove();
+    }
+    function removeTool(e) {
+        $.get("removeTool/" + e.parentElement.id, function (data, status) {
+            //console.log(status);
+            success: {
+                iziToast.success({
+                    title: 'Hola',
+                    message: 'Mise à jour des paramètres de recherche !',
+                    icon: 'fa fa-check-square'
+                });
+            }
+            $("#displayFiles").load("/search/DisplayFiles");
+        });
+        e.parentElement.remove();
+
+    }
+    function removeKeyPhrase(e) {
+        $.get("removeKeyPhrase/" + e.parentElement.id, function (data, status) {
+            //console.log(status);
+            success: {
+                iziToast.success({
+                    title: 'Hola',
+                    message: 'Mise à jour des paramètres de recherche !',
+                    icon: 'fa fa-check-square'
+                });
+            }
+            $("#displayFiles").load("/search/DisplayFiles");
+        });
+        e.parentElement.remove();
+
+    }
+</script>

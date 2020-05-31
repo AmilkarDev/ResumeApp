@@ -1,8 +1,9 @@
-﻿@model ResumeApp.Models.ApplicationUser
-@{
+﻿
+@model ResumeApp.Models.ApplicationUser
+@*@{
     ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
-}
+}*@
 
 <h2 class="well text-center">Details d'utilisateurs .</h2>
 
@@ -53,9 +54,9 @@
         </tr>
     }
 </table>
-<div align="center">
+@*<div align="center">
     <a href="@Url.Action("Edit","Identity", new { id = Model.Id })" class="btn btn-primary"><span class="glyphicon glyphicon-edit"></span> Modifier </a>
     <a href="@Url.Action("Index","Identity")" class="btn btn-primary"><span class="glyphicon glyphicon-backward"></span> Retour </a>
 
-</div>
+</div>*@
 

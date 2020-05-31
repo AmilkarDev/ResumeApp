@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ResumeApp.Models.KnowledgeBase>
+
+<button class="btn btn-primary"  id="myBtn"  value="Ajouter une base de connaissance">Ajouter une base de connaissance</button>
+<br>
+<table class="table">
+    <tr>
+        <th>
+
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Name)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Description)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+    <tr>
+        <td>
+            @Html.RadioButton("Kb", item.Id, new { @id = "checka" })
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+
+        <td>
+            <a href="#" onclick="return getbyID(@item.Id)">Modifier</a> | <a href="#" onclick="Delele(@item.Id)">Supprimer</a>
+        </td>
+        @*<td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
+            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+        </td>*@
+    </tr>
+    }
+
+</table>
+<script src="~/Content/iCheck/icheck.js"></script>
+<link href="~/Content/iCheck/flat/flat.css" rel="stylesheet" />
+<script src="~/Content/KbScript.js"></script>

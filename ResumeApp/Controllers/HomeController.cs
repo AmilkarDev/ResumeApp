@@ -1,7 +1,11 @@
 ﻿using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
 using Microsoft.AspNet.Identity.Owin;
+using MoreLinq;
+using PagedList;
+using ResumeApp.Helpers;
 using ResumeApp.Models;
+using ResumeApp.TextAnalytics;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -10,11 +14,13 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
+using TikaOnDotNet.TextExtraction;
 
 namespace ResumeApp.Controllers
 {
@@ -63,6 +69,18 @@ namespace ResumeApp.Controllers
         {
             return View();
         }
+        public ActionResult AboutUs()
+        {
+            return View();
+        }
+        public ActionResult OurServices()
+        {
+            return View();
+        }
+        public ActionResult Features()
+        {
+            return View();
+        }
 
         public ActionResult About()
         {
@@ -80,124 +98,193 @@ namespace ResumeApp.Controllers
 
         public ActionResult UploadFiles()
         {
-            List<string> ll = new List<string>();
-            string newPath = System.IO.Path.Combine(Server.MapPath("~/UploadedFiles/"));
+            //var tools = ctx.Softwares.ToList();
+            //var titles = ctx.Titles.ToList();
+            //var languages = ctx.Languages.ToList();
+            //var skills = ctx.Skills.ToList();
+            //var countries = ctx.Countries.ToList();
+            //foreach (var item in tools)
+            //{
+            //    item.Text = item.Text.ToLower();
 
-            var k = Directory.GetFiles(newPath);
-            foreach (var item in k)
-            {
-                var tt = item.Split('\\');
-                ll.Add(tt.LastOrDefault());
-            }
-            ViewBag.files = ll;
-            
+            //}
+            //foreach (var item in titles)
+            //{
+            //    item.Text = item.Text.ToLower();
+            //}
+            //foreach (var item in languages)
+            //{
+            //    item.Text = item.Text.ToLower();
+            //}
+            //foreach (var item in skills)
+            //{
+            //    item.Text = item.Text.ToLower();
+            //}
+            //foreach (var item in countries)
+            //{
+            //    item.Text = item.Text.ToLower();
+            //}
+            //ctx.SaveChanges();
+
+            //  ViewBag.files = ll;
+
             return View();
         }
         [HttpPost]
-        public ActionResult UploadFiles(HttpPostedFileBase[] files)
+        public async Task<ActionResult> UploadFiles(HttpPostedFileBase[] files)
         {
-
+            List<string> existingFiles = ctx.CvFiles.Select(x => x.fileName).ToList();
             //Ensure model state is valid  
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && files!=null)
             {   //iterating through multiple file collection   
                 foreach (HttpPostedFileBase file in files)
                 {
                     //Checking file is available to save.  
-                    if (file != null)
+                    if (file != null && !existingFiles.Contains(file.FileName))
                     {
                         var InputFileName = System.IO.Path.GetFileName(file.FileName);
                         var ServerSavePath = System.IO.Path.Combine(Server.MapPath("~/UploadedFiles/") + InputFileName);
                         //Save file to server folder  
                         file.SaveAs(ServerSavePath);
+                        //Save file info to db
+                        CvFile cvfile = new CvFile { fileName = InputFileName };
+                        Profile pp = await ExtractTextFromPdf(ServerSavePath);
+                        pp.CvFile = cvfile;
+                        ctx.Profiles.Add(pp);
+                        ctx.CvFiles.Add(cvfile);
+                        ctx.SaveChanges();
                         //assigning file uploaded status to ViewBag for showing message to user.  
                         ViewBag.UploadStatus = files.Count().ToString() + " files uploaded successfully.";
                     }
 
                 }
             }
-            //return View();
-            /*************** return List of Files  *************************************************/
-            List<string> ll = new List<string>();
-            string newPath = System.IO.Path.Combine(Server.MapPath("~/UploadedFiles/"));
-
-            var k = Directory.GetFiles(newPath);
-            foreach (var item in k)
-            {
-                var tt = item.Split('\\');
-                ll.Add(tt.LastOrDefault());
-            }
-            ViewBag.files = ll;
             return View();
         }
 
-        public ActionResult Details(string id)
+        public ActionResult DisplayFiles(string search, int? pageNumber)
         {
-            string newPath = System.IO.Path.Combine(Server.MapPath("~/UploadedFiles/"));
-            var k = Directory.GetFiles(newPath).Where(x=>x.Contains(id)).FirstOrDefault() ;
-
-
+            var listacv = new List<CvFile>();
+            listacv = ctx.CvFiles.ToList();
+            var listProfiles = ctx.Profiles.ToList();
+            var final = listProfiles.ToPagedList(pageNumber ?? 1, 2);
+            return PartialView(final);
+        }
+        //public ActionResult Search(string search, int? pageNumber)
+        //{
+        //    //var listacv = new List<CvFile>();
+        //    //listacv = ctx.CvFiles.ToList();
+        //    //var listProfiles = ctx.Profiles.ToList();
+        //    //var final = listProfiles.ToPagedList(pageNumber ?? 1, 2);
+        //    //return PartialView(final);
+        //}
+        public ActionResult Details(int Id)
+        {
             if (Request.IsAjaxRequest())
             {
-
-
-                if (id == "None")
-                {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-                }
-                Profile profile = ExtractTextFromPdf(k);
-                
-                if (profile == null)
+                var pp = ctx.Profiles.Where(c => c.Id == Id).FirstOrDefault();
+                ctx.Entry(pp).Collection(x => x.Countries).Load();
+                ctx.Entry(pp).Collection(x => x.Languages).Load();
+                ctx.Entry(pp).Collection(x => x.Skills).Load();
+                ctx.Entry(pp).Collection(x => x.Titles).Load();
+                ctx.Entry(pp).Collection(x => x.Tools).Load();
+                ctx.Entry(pp).Collection(x => x.Entities).Load();
+                ctx.Entry(pp).Collection(x => x.KeyPhrases).Load();
+                if (pp == null)
                 {
                     return HttpNotFound();
                 }
-                return PartialView(profile);
+                return PartialView(pp);
             }
             return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             
         }
 
-        public  async Task<JsonResult> saveFile(string id)
-        {
-            string newPath = System.IO.Path.Combine(Server.MapPath("~/UploadedFiles/"));
-            var fullpath = Directory.GetFiles(newPath).Where(x => x.Contains(id)).FirstOrDefault();            
-            Uri uri = new Uri(fullpath);
 
-            string filename = System.IO.Path.GetFileName(uri.LocalPath);
-            using (WebClient myWebClient = new WebClient())
+        public ActionResult Valid(int Id)
+        {
+            if (Request.IsAjaxRequest())
             {
-                string destination = "C:/Users/Amilkar/Documents/AppResumeDocs/" + filename;
-                 await myWebClient.DownloadFileTaskAsync(uri, destination);
-                return Json("download done successfully", JsonRequestBehavior.AllowGet);
+                var pp = ctx.Profiles.Where(c => c.Id == Id).FirstOrDefault();
+                //ctx.Entry(pp).Collection(x => x.Countries).Load();
+                //ctx.Entry(pp).Collection(x => x.Languages).Load();
+                //ctx.Entry(pp).Collection(x => x.Skills).Load();
+                //ctx.Entry(pp).Collection(x => x.Titles).Load();
+                //ctx.Entry(pp).Collection(x => x.Tools).Load();
+                if (pp == null)
+                {
+                    return HttpNotFound();
+                }
+                return PartialView(pp);
             }
-            //byte[] fileBytes = System.IO.File.ReadAllBytes(fullpath);            
-            //return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+            return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        }
+        [HttpPost]
+        public JsonResult Valid(Profile profile)
+        {
+            Profile pr = ctx.Profiles.Where(x => x.Id == profile.Id).FirstOrDefault();
+            pr.PhoneNumber = profile.PhoneNumber;
+            pr.Nationality = profile.Nationality;
+            pr.FullName = profile.FullName;
+            pr.Email = profile.Email;
+            ctx.SaveChanges();
+            return Json("enregistré avec succés ", JsonRequestBehavior.AllowGet);
         }
 
-     
+        //public  async Task<JsonResult> saveFile(string id)
+        //{
+        //        string desktopPath = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+
+        //    string newPath = System.IO.Path.Combine(Server.MapPath("~/UploadedFiles/"));
+        //    var fullpath = Directory.GetFiles(newPath).Where(x => x.Contains(id)).FirstOrDefault();            
+        //    Uri uri = new Uri(fullpath);
+
+        //    string filename = System.IO.Path.GetFileName(uri.LocalPath);
+        //    using (WebClient myWebClient = new WebClient())
+        //    {
+        //        string destination = filename;
+        //        await myWebClient.DownloadFileTaskAsync(uri, desktopPath+'/'+destination);
+        //        return Json("download done successfully", JsonRequestBehavior.AllowGet);
+        //    }
+        //    //byte[] fileBytes = System.IO.File.ReadAllBytes(fullpath);            
+        //    //return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+        //}
+
+
         public FileResult Download(string id)
         {
             DirectoryInfo dirInfo = new DirectoryInfo(HostingEnvironment.MapPath("~/UploadedFiles"));
             var fullpath = Directory.GetFiles(dirInfo.FullName).Where(x => x.Contains(id)).FirstOrDefault();
-            //int CurrentFileID = Convert.ToInt32(FileID);
-            //var filesCol = obj.GetFiles();
-            //string CurrentFileName = (from fls in filesCol
-            //                          where fls.FileId == CurrentFileID
-            //                          select fls.FilePath).First();
             string contentType = string.Empty;            
             contentType = "application/pdf";
             return File(fullpath, contentType, id+".pdf");
         }
-        public JsonResult removeFile(string id)
+        public JsonResult removeFile(int Id)
         {
+            int idFile = ctx.Profiles.Where(x=>x.Id==Id).FirstOrDefault().CvFileId;
+            var file = ctx.CvFiles.Single(x => x.Id == idFile);
+            string id = file.fileName;
             string newPath = System.IO.Path.Combine(Server.MapPath("~/UploadedFiles/"));
             var fullpath = Directory.GetFiles(newPath).Where(x => x.Contains(id)).FirstOrDefault();
-            Uri uri = new Uri(fullpath);
+//bool poca = System.IO.File.Exists(filename);
+            if (fullpath!=null)
+            {
+                Uri uri = new Uri(fullpath);
             string filename = System.IO.Path.GetFileName(uri.LocalPath);
-            bool poca = System.IO.File.Exists(filename);
-            System.IO.File.Delete(uri.LocalPath);
+            
+                System.IO.File.Delete(uri.LocalPath);
+            }
+            
+            Profile pr = ctx.Profiles.Where(x => x.CvFileId == file.Id).FirstOrDefault();
+            ctx.Entry(pr).Collection(s => s.Entities).Load();
+            ctx.Entry(pr).Collection(s => s.KeyPhrases).Load();
+            //foreach (var item in pr.Entities) ctx.Entities.Remove(item);
+            //foreach (var item in pr.KeyPhrases) ctx.KeyPhrases.Remove(item);
+            ctx.Profiles.Remove(pr);
+            ctx.CvFiles.Remove(file);
+            ctx.SaveChanges();
             /*************** return List of Files  *************************************************/
             List<string> ll = new List<string>();
-
             var k = Directory.GetFiles(newPath);
             foreach (var item in k)
             {
@@ -208,7 +295,7 @@ namespace ResumeApp.Controllers
             return Json("removal done successfully", JsonRequestBehavior.AllowGet);
         }
 
-        public static Profile ExtractTextFromPdf(string path)
+        public async Task<Profile> ExtractTextFromPdf(string path)
         {
             var sb = new StringBuilder();
             Profile pp = new Profile();
@@ -218,13 +305,9 @@ namespace ResumeApp.Controllers
                 {
                     StringBuilder text = new StringBuilder();
                     List<string> ll = new List<string>();
-                    //for (int i = 1; i <= reader.NumberOfPages; i++)
-                    //{
-                    //text.Append(PdfTextExtractor.GetTextFromPage(reader, i));
                     string txt = PdfTextExtractor.GetTextFromPage(reader, 1);
                     var ll1 = txt.Split('\n');
                     bool vala = false;
-                    // variable to detect whther first email address has been found 
                     bool found = false;
                     foreach (var item in ll1)
                     {
@@ -232,56 +315,57 @@ namespace ResumeApp.Controllers
                         {
                             vala = true;
                             pp.FullName = item;
-                            // Console.WriteLine("First & Last Name "+item);
                         }
                         if (!found)
                         {
-                            if (item.Contains("@") || item.Contains("gmail") || item.Contains("yahoo") || item.Contains("outlook") || (item.Contains(".com") && item.Contains("@")) || (item.Contains(".tn") && item.Contains("@")) || (item.Contains(".fr") && item.Contains("@")))
+                            string st = "";
+                            var b = item.Split(' ');
+                            foreach (var ss in b)
                             {
-                                found = true;
-                                pp.Email = item;
-                                //Console.WriteLine("Email address " + item);
+                                if (ss.Contains("@") || ss.Contains("gmail") || ss.Contains("yahoo") || ss.Contains("outlook") || (ss.Contains(".com") && item.Contains("@")) || (ss.Contains(".tn") && ss.Contains("@")) || (ss.Contains(".fr") && ss.Contains("@")) || ss.Contains("email") || ss.Contains("E-mail") || ss.Contains("Email"))
+                                {
+                                    found = true;
+                                    pp.Email = ss;
+                                }
                             }
                         }
                         if (item.Contains("216") || item.Contains("Tél") || item.Contains("Téléphone") || item.Contains("+33") || item.Contains("Tel") || item.Contains("+91"))
                         {
-                            pp.PhoneNumber = item;
-                            Console.WriteLine("Phone number" + item);
+                            string st = "";
+                            var b = item.Split(' ');
+                            foreach(var ss in b)
+                            {
+                                if (ss.Any(char.IsDigit) || ss== "–" || ss== "_"||ss=="-") st = st+' ' + ss;
+                            }
+                            //pp.PhoneNumber = item;
+                            pp.PhoneNumber = st;
+                           // Console.WriteLine("Phone number" + item);
                         }
-                        //PhoneNumberUtil phoneUtil = PhoneNumberUtil.GetInstance();
-                        //var phoneNumber = phoneUtil.FindNumbers(item,null);
-                        //var tt = phoneUtil.FindNumbers(item,"TN");
-                        //var kk = true;
-                        //foreach (var ita in phoneNumber)
-                        //{
-                        //    Console.WriteLine(ita.ToString());
-                        //    Console.WriteLine(tt.ToString());
-                        //}
-                        //foreach (var ita in tt)
-                        //{
-                        //    Console.WriteLine(ita.ToString());
-
-                        //}
-                        //var count = item.Count(char.IsDigit);
-                        //if (count > 6)
-                        //{
-                        //    Console.WriteLine("Phone Number " + item);
-                        //}
-
                     }
-                    //if (vala == false)
-                    //{
-                    //Console.WriteLine("&&&&&&&&&&&&&&&&&&&&&&& présentation générale &&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&");
-                    //    Console.WriteLine(ll1[0]);
-                    //    Console.WriteLine(ll1[1]);
-                    //    Console.WriteLine(ll1[2]);
-                    //    Console.WriteLine(ll1[3]);
-                    //}
-                    //ll.Add(txt);
-                    text.Append(txt);
-                    //}
+                    
+                    var textExtractor = new TextExtractor();
+                    var wordDocContents = textExtractor.Extract(path);
+                    string content = wordDocContents.Text;
 
-                    // return text.ToString();
+                    content = Regex.Replace(content, @"\s+", " ").ToLower();
+                    int chunkSize = 5100;
+                    int stringLength = content.Length;
+                    List<string> strr = new List<string>();
+                    for (int j = 0; j < stringLength; j += chunkSize)
+                    {
+                        if (j + chunkSize > stringLength) chunkSize = stringLength - j;
+                        strr.Add(content.Substring(j, chunkSize));
+                    }
+                    pp.Entities = await Analytics.ExtractEntities( strr);
+                    pp.KeyPhrases = await Analytics.ExtractKeyPhrases(strr);
+                    content = content.MakeAlphaNumeric(new char[] { '-', ' ' });
+                    pp.Countries = ExtractCountries(content);
+                    pp.Languages = ExtractLanguages(content);
+                    pp.Titles = ExtractTitles(content);
+                    pp.Tools = ExtractTools( content);
+                    pp.Skills = ExtractSkills( content);
+                    //Removing values duplications in entities , to not have for example same profile with two entities of type Location that have the text "Marrakech"
+                    pp = FixData(pp);
                     return pp;
                 }
             }
@@ -291,7 +375,140 @@ namespace ResumeApp.Controllers
             }
 
         }
-        public ActionResult listFiles()
+        public Profile FixData(Profile pr)
+        {
+            var al = pr.Entities.GroupBy(x => x.Text);
+            bool count;
+            foreach (var item in al)
+            {
+
+                if (item.Count() > 1)
+                {
+                    // I use count variable to check if it's the first element , if it's , the we keep it , we remove all the rest duplicates
+                    count = false;
+                    foreach (Entity ent in item)
+                    {
+                        if (count)
+                        {
+                            pr.Entities.Remove(ent);
+                            ctx.Entities.Remove(ent);
+                        }
+                        count = true;
+                    }
+                }
+
+            }
+
+            var kp = pr.KeyPhrases.GroupBy(x => x.Text);
+            bool newCount;
+            foreach (var item in kp)
+            {
+
+                if (item.Count() > 1)
+                {
+                    // I use count variable to check if it's the first element , if it's , the we keep it , we remove all the rest duplicates
+                    newCount = false;
+                    foreach (KeyPhrase kph in item)
+                    {
+                        if (newCount)
+                        {
+                            pr.KeyPhrases.Remove(kph);
+                            ctx.KeyPhrases.Remove(kph);
+                        }
+                        newCount = true;
+                    }
+                }
+
+            }
+
+
+
+
+            //ctx.SaveChanges();
+            return pr;
+        }
+        public  List<Language> ExtractLanguages(string content)
+        {
+            //List<string> languages = new List<string> { "italien", "Italien", "Arabe", "français", "arabe", "Français", "Anglais", "anglais", "Allemand", "Espagnol", "allemand", "espagnol" };
+            List<string> languages = ctx.KnowledgeBases.Include(k => k.Languages).FirstOrDefault().Languages.Select(x=>x.Text).ToList();
+            List<Language> str= new List<Language>();
+            AhoCorasick.Trie triee = new AhoCorasick.Trie();
+            triee.Add(languages);
+            triee.Build();
+            var listaa = triee.Find(content).ToList();
+            foreach (string word in listaa.Distinct())
+            {
+                str.Add(ctx.Languages.Where(x => x.Text == word).FirstOrDefault());
+            }
+            return str;
+        }
+        public  List<Country> ExtractCountries(string content)
+        {
+            //List<string> countries = new List<string> { "Canada", "France", "Brésil", "Amérique", "Tunisie", "Algérie", "Maroc", "Australie", "Arabie saoudite", "Allemagne", "Suède" };
+
+            List<string> countries = ctx.KnowledgeBases.Include(k=>k.Countries).FirstOrDefault().Countries.Select(x => x.Text).ToList();
+            List<Country> str = new List<Country>();
+            AhoCorasick.Trie triee = new AhoCorasick.Trie();
+            triee.Add(countries);
+            triee.Build();
+            // Console.WriteLine("\n \n \n \n Liste des Langues \n \n \n");
+            var listaa = triee.Find(content).ToList();
+            foreach (string word in listaa.Distinct())
+            {
+                str.Add(ctx.Countries.Where(x=>x.Text==word).FirstOrDefault());
+                //Console.WriteLine(word);
+
+            }
+            return str;
+        }
+        public  List<Skill> ExtractSkills(string content)
+        {
+            //List<string> countries = new List<string> { "Canada", "France", "Brésil", "Amérique", "Tunisie", "Algérie", "Maroc", "Australie", "Arabie saoudite", "Allemagne", "Suède" };
+
+            List<string> skills = ctx.KnowledgeBases.Include(k => k.Skills).FirstOrDefault().Skills.Select(x => x.Text).ToList();
+            List<Skill> str = new List<Skill>();
+            AhoCorasick.Trie triee = new AhoCorasick.Trie();
+            triee.Add(skills);
+            triee.Build();
+            var listaa = triee.Find(content).ToList();
+            foreach (string word in listaa.Distinct())
+            {
+                str.Add(ctx.Skills.Where(x=>x.Text==word).FirstOrDefault());
+            }
+            return str;
+        }
+        public  List<Tool> ExtractTools(string content)
+        {
+
+            List<string> tools = ctx.KnowledgeBases.Include(k => k.Tools).FirstOrDefault().Tools.Select(x => x.Text).ToList();
+            List<Tool> str = new List<Tool>();
+            AhoCorasick.Trie triee = new AhoCorasick.Trie();
+            triee.Add(tools);
+            triee.Build();
+            var listaa = triee.Find(content).ToList();
+            foreach (string word in listaa.Distinct())
+            {
+                str.Add(ctx.Softwares.Where(x => x.Text == word).FirstOrDefault());
+            }
+            return str;
+        }
+        public  List<Title> ExtractTitles( string content)
+        {
+            //List<string> countries = new List<string> { "Canada", "France", "Brésil", "Amérique", "Tunisie", "Algérie", "Maroc", "Australie", "Arabie saoudite", "Allemagne", "Suède" };
+
+            List<string> titles = ctx.KnowledgeBases.Include(k => k.Titles).FirstOrDefault().Titles.Select(x => x.Text).ToList();
+            List<Title> str = new List<Title>();
+            AhoCorasick.Trie triee = new AhoCorasick.Trie();
+            triee.Add(titles);
+            triee.Build();
+            var listaa = triee.Find(content).ToList();
+            foreach (string word in listaa.Distinct())
+            {
+                str.Add(ctx.Titles.Where(x => x.Text == word).FirstOrDefault());
+            }
+            return str;
+        }
+        public ActionResult listFiles(string search, int? pageNumberr)
         {
             List<string> ll = new List<string>();
             string newPath = System.IO.Path.Combine(Server.MapPath("~/UploadedFiles/"));
@@ -306,7 +523,14 @@ namespace ResumeApp.Controllers
                 CvFile newfile = new CvFile { fileName = filename };
                 listacv.Add(newfile);
             }
-            return PartialView(listacv);
+            if(search==null) return PartialView(listacv.ToPagedList(pageNumberr ?? 1, 3));
+            else
+            {
+                listacv = listacv.Where(x => x.fileName.Contains(search) || search == null).ToList();
+                return PartialView(listacv.ToPagedList(pageNumberr ?? 1, 3));
+            }
+            
+            
         }
         [HttpGet]
         public async Task<ActionResult> listUsers()
@@ -326,11 +550,19 @@ namespace ResumeApp.Controllers
             return View();
         }
         
-        public async Task<ActionResult> Mailing()
+        public  ActionResult Recipients(string search, int? pageNumber,int? pageNumberr)
         {
-            var kk = await UserManager.Users.ToListAsync();
-
-            return View(kk);
+            var listUsers =  UserManager.Users.ToList();
+            if (!string.IsNullOrEmpty(search))
+            {
+                listUsers = listUsers.Where(x =>x.FullName!=null && x.FullName.Contains(search)).ToList();
+            }
+            var final = listUsers.ToPagedList(pageNumber ?? 1, 2);
+            return PartialView(final);
+        }
+        public async Task<ActionResult> Mailing(string search, int? pageNumber, int? pageNumberr)
+        {
+            return View();
         }
        public JsonResult SendEmail(FullEmail fullEmail)
        {
@@ -338,18 +570,42 @@ namespace ResumeApp.Controllers
             try
             {
                 //Fetching Email Body Text from EmailTemplate File.  
-                string filePath = System.IO.Path.Combine(Server.MapPath("~/EmailTemplates/email.html"));
-                StreamReader str = new StreamReader(filePath);
-                string mailText = str.ReadToEnd();
-                str.Close();
+                //string filePath = System.IO.Path.Combine(Server.MapPath("~/EmailTemplates/email.html"));
+                //StreamReader str = new StreamReader(filePath);
+                //string mailText = str.ReadToEnd();
+                //str.Close();
                
                 MailMessage mail = new MailMessage();
                 SmtpClient smtpServer = new SmtpClient(_server);
                 mail.IsBodyHtml = true;
-                mail.Body = mailText;
+                mail.Body = fullEmail.EmailContent ;
                 mail.From = new MailAddress("tyouba@ontonomia.com");
-                mail.To.Add("bh.imen@ontonomia.com");
-                mail.Subject = "Test Mail";
+                foreach (var item in fullEmail.Recipients)
+                {
+                    mail.To.Add(item);
+                }
+                foreach (var item in fullEmail.ccrecipients)
+                {
+                    mail.CC.Add(item);
+                }
+                foreach (var item in fullEmail.Attachments)
+                {
+                    
+                    string fullpath = System.IO.Path.Combine(Server.MapPath("~/UploadedFiles/"+item));
+                    //var fullpath = Directory.GetFiles(newPath).Where(x => x.Contains(id)).FirstOrDefault();
+                    //bool poca = System.IO.File.Exists(filename);
+                    if (fullpath != null)
+                    {
+                        Uri uri = new Uri(fullpath);
+                        //string filename = System.IO.Path.GetFileName(uri.LocalPath);
+
+                        // System.IO.File.Delete(uri.LocalPath);
+                        mail.Attachments.Add(new Attachment(fullpath));
+                    }
+
+                    //mail.Attachments.Add(new Attachment("UploadedFiles/" + item.Trim()));
+                }
+                mail.Subject = fullEmail.Subject;
                 smtpServer.Port = 587;
                 smtpServer.Credentials = new System.Net.NetworkCredential(_user, _password);
                 //smtpServer.EnableSsl = true;

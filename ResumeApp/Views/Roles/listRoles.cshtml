@@ -1,0 +1,30 @@
+﻿@model IEnumerable<ResumeApp.Models.ApplicationRole>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Nom")
+        </th>
+        <th>
+            @Html.DisplayName("Description")
+        </th>
+        <th>
+
+        </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                <a href="#" onclick="return getbyID('@item.Id')">Modifier</a> | <a href="#" onclick="Delete('@item.Id')">Supprimer</a>
+            </td>
+        </tr>
+    }
+
+</table>

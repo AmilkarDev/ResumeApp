@@ -41,7 +41,7 @@
     <script src="~/Content/siteContent/js/modernizer.js"></script>
 
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    @*@Scripts.Render("~/bundles/bootstrap")*@
     @Scripts.Render("~/bundles/jqueryval")
     @RenderSection("Scripts", required: false)
     <script src="~/Content/iCheck/icheck.js"></script>
@@ -135,14 +135,11 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a class="active" href="index.html">Home</a></li>
-                        <li><a href="about-us.html">About us</a></li>
-                        <li><a href="services.html">For Team</a></li>
-                        <li><a href="portfolio.html">Notifications</a></li>
-                        <li><a href="features.html">For Candidats</a></li>
-                        <li><a href="testimonials.html">For Client</a></li>
-                        <li><a href="pricing.html">Pricing</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="@Url.Action("Index", "Home")">Accueil</a></li>
+                        <li><a href="@Url.Action("Features", "Home")">features</a></li>
+                        <li><a href="@Url.Action("OurServices", "Home")">Services</a></li>
+                        <li><a href="@Url.Action("AboutUs", "Home")">Qui sommes Nous</a></li>
+                        <li><a href="@Url.Action("Contact", "Home")">Contact </a></li>
                     </ul>
                 </div>
             </div>
@@ -231,7 +228,7 @@
     @section Scripts {
         @Scripts.Render("~/bundles/jqueryval")
     }
-
+  
 
     <!-- ALL JS FILES -->
     <script src="~/Content/siteContent/js/all.js"></script>

@@ -34,18 +34,15 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="~/Content/siteContent/css/custom.css">
     <!-- Modernizer for Portfolio -->
-
-
-
-
     <script src="~/Content/siteContent/js/modernizer.js"></script>
-
     @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
+    @*@Scripts.Render("~/bundles/bootstrap")*@
     @Scripts.Render("~/bundles/jqueryval")
     @RenderSection("Scripts", required: false)
     <script src="~/Content/iCheck/icheck.js"></script>
     <link href="~/Content/iCheck/flat/flat.css" rel="stylesheet" />
+    @*<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>*@
+
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
@@ -135,14 +132,16 @@
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a class="active" href="index.html">Home</a></li>
-                        <li><a href="@Url.Action("Mailing", "Home")">Envoi CVs</a></li>
+                        <li><a href="@Url.Action("Index", "Home")">Accueil</a></li>
+                        <li><a href="@Url.Action("Mailing", "Home")">Mailing</a></li>
                         <li><a href="@Url.Action("UploadFiles", "Home")">Upload CVs </a></li>
-                        <li><a href="portfolio.html">Notifications</a></li>
-                        <li><a href="features.html">For Candidats</a></li>
-                        <li><a href="testimonials.html">For Client</a></li>
-                        <li><a href="pricing.html">Pricing</a></li>
-                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="@Url.Action("Index", "Search")">Recherche </a></li>
+                        <li><a href="@Url.Action("Index", "AdvSearch")">Recherche Avancé  </a></li>
+                        @*<li><a href="portfolio.html">Notifications</a></li>
+        <li><a href="features.html">For Candidats</a></li>
+        <li><a href="testimonials.html">For Client</a></li>
+        <li><a href="pricing.html">Pricing</a></li>
+        <li><a href="contact.html">Contact</a></li>*@
                     </ul>
                 </div>
             </div>

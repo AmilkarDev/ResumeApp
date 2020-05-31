@@ -1,0 +1,85 @@
+﻿
+@{
+    ViewBag.Title = "Search";
+    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+}
+
+<h2>Search</h2>
+<div class="row">
+    <div class="col-md-4">
+        <fieldset>
+            <legend>Compétences</legend>
+            <input type="text" id="skills" placeholder="Input your keyword">
+        </fieldset>
+    </div>
+    <div class="col-md-4">
+        <fieldset>
+            <legend>Titres</legend>
+            <input type="text" id="titles" placeholder="Input your keyword">
+        </fieldset>
+    </div>
+    <div class="col-md-4">
+        <fieldset>
+            <legend>Outils</legend>
+            <input type="text" id="tools" placeholder="Input your keyword">
+        </fieldset>
+    </div>
+    </div>
+<div class="row">
+    <div class="col-md-4">
+        <fieldset>
+            <legend>Langue</legend>
+            <input type="text" id="productName" placeholder="Input your keyword">
+        </fieldset>
+    </div>
+    <div class="col-md-4">
+        <fieldset>
+            <legend>Pays</legend>
+            <input type="text" id="productName" placeholder="Input your keyword">
+        </fieldset>
+    </div>
+    <div class="col-md-4">
+        <fieldset>
+            <legend>Nom</legend>
+            <input type="text" id="productName" placeholder="Input your keyword">
+        </fieldset>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <fieldset>
+            <legend>Organization</legend>
+            <input type="text" id="productName" placeholder="Input your keyword">
+        </fieldset>
+    </div>
+    <div class="col-md-4">
+        <fieldset>
+            <legend>Location</legend>
+            <input type="text" id="productName" placeholder="Input your keyword">
+        </fieldset>
+    </div>
+    <div class="col-md-4">
+        <fieldset>
+            <legend>Email</legend>
+            <input type="text" id="productName" placeholder="Input your keyword">
+        </fieldset>
+    </div>
+</div>
+<div id="">
+
+</div>
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#skills').autocomplete({
+                source: '@Url.Action("Search", "Product")'
+            });
+             $('#tools').autocomplete({
+                source: '@Url.Action("Search", "Product")'
+             });
+             $('#titles').autocomplete({
+                source: '@Url.Action("Search", "Product")'
+            });
+        });
+    </script>

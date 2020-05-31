@@ -1,0 +1,136 @@
+﻿<div style="padding:15px">
+    <div class="alert alert-danger text-center">
+        <h2>Recherche Avancé</h2>
+    </div>
+    <div class="row">
+        <div class="col-md-3"></div>
+
+        <div class="col-md-6">
+            <input type="Text" class="form-control" id="myInput" /> <br />
+            <p id="searchCount" class="text-center"></p>
+        </div>
+        <div class="col-md-3"></div>
+    </div>
+    <br />
+
+    <div class="text-center">
+        <button class="btn btn-primary" id="SearchOne" onclick="AnySearch()">Recherche générale</button>
+        <button class="btn btn-primary" id="SearchTwo" onclick="AllSearch()">Recherche Strict</button>
+        <button class="btn btn-primary" id="SearchTwo" onclick="WildCardSearch()">Recherche WildCard</button>
+        <button class="btn btn-primary" id="SearchTwo" onclick="FuzzySearch()">Recherche Fuzzy</button>
+    </div>
+
+    <br />
+
+    <div id="searchResults">
+
+    </div>
+    <br />
+
+    <br />
+    <br />
+</div>
+
+
+
+
+
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">CV sélectionné</h4>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center;">
+                    <iframe style="width:500px; height:500px;" frameborder="0" id="frima"></iframe>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                @*<button type="button" class="btn btn-primary" onclick="saveFile()">Save file</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">Détails du candidat</h4>
+            </div>
+            <div class="modal-details">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                <button type="button" class="btn btn-primary">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+        $('.navbar-nav li a.active').removeClass('active');
+        $(".navbar-nav li a[href='/AdvSearch']").addClass('active');
+    });
+    function AnySearch() {
+        var searchTerm = $("#myInput").val();
+        $.get("/advsearch/AnySearch/", { "searchTerm": searchTerm },
+            function (data) {
+                $("#searchCount").show();
+                $("#searchResults").empty();
+                $("#searchResults").html(data);
+                var count = $("#countResults").html();
+                $("#searchCount").html(count);
+                $("#searchCount").show();
+            });
+    }
+
+    function AllSearch() {
+        var searchTerm = $("#myInput").val();
+        $.get("/advsearch/AllSearch/", { "searchTerm": searchTerm },
+            function (data) {
+                $("#searchResults").empty();
+                $("#searchResults").html(data);
+                var count = $("#countResults").html();
+                $("#searchCount").html(count);
+                $("#searchCount").show();
+            });
+    }
+    function WildCardSearch() {
+        var searchTerm = $("#myInput").val();
+        $.get("/advsearch/WildCardSearch/", { "searchTerm": searchTerm },
+            function (data) {
+                $("#searchResults").empty();
+                $("#searchResults").html(data);
+                var count = $("#countResults").html();
+                $("#searchCount").html(count);
+                $("#searchCount").show();
+            });
+    }
+    function FuzzySearch() {
+        var searchTerm = $("#myInput").val();
+        $.get("/advsearch/FuzzySearch/", { "searchTerm": searchTerm },
+            function (data) {
+
+                $("#searchResults").empty();
+                $("#searchResults").html(data);
+                var count = $("#countResults").html();
+                $("#searchCount").html(count);
+                $("#searchCount").show();
+            });
+    }
+</script>

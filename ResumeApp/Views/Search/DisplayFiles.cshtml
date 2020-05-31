@@ -1,0 +1,70 @@
+﻿
+@using PagedList;
+
+@using PagedList.Mvc;
+
+@model IPagedList<ResumeApp.Models.Profile>
+
+<script src="~/Content/iCheck/icheck.js"></script>
+<link href="~/Content/iCheck/flat/flat.css" rel="stylesheet" />
+<a href="#" class="btn btn-primary" data-target="#detailsModal" data-toggle="modal" onclick="Details()"><span class="glyphicon glyphicon-sunglasses"></span>Détails</a>
+<button class="btn btn-primary" id="vv" data-toggle="modal" data-target="#myModal" onclick="setSource()"> Afficher </button>
+<button class="btn btn-primary" id="uu" onclick="Download()"> Télécharger </button>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th>CV</th>
+            <th>Nom Complet</th>
+            <th>Email</th>
+            <th>Téléphone</th>
+            <th>Nationalité</th>
+            <th>Validation</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.RadioButton("checka", item.Id, new { @id = item.CvFile.fileName })
+                </td>
+                <td>@item.CvFile.fileName </td>
+                <td>@item.FullName </td>
+                <td>@item.Email </td>
+                <td>@item.PhoneNumber </td>
+                <td>@item.Nationality </td>
+                @{
+                    if (item.Validated)
+                    {
+                        <td>Validé </td>
+                    }
+                    else
+                    {
+                        <td>Non validé </td>
+                    }
+                }
+
+
+
+
+                @*<td>
+                          <a href="#" class="btn btn-primary" id="@item" onclick="removeFile(this.id)"><span class="glyphicon glyphicon-remove"></span>Supprimer</a>
+                          @Html.ActionLink("Download", "Download", new { id = item.fileName.Substring(0, item.fileName.IndexOf('.')) }, new { @class = "btn btn-primary" })
+                          <a href="#" class="btn btn-primary" data-target="#detailsModal" data-toggle="modal" id="@item.fileName" onclick="Details(this.id)"><span class="glyphicon glyphicon-sunglasses"></span>Détails</a>
+                          <button class="btn btn-primary" id="vv" data-toggle="modal" data-target="#myModal" onclick="setSource('\'@item.fileName\'')">
+                              View File
+                          </button>
+                    </td>*@
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.PagedListPager(
+    Model,
+    pageNumber => Url.Action("DisplayFiles", new { pageNumber = pageNumber }),
+    PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions(){  HttpMethod = "GET", UpdateTargetId = "displayFiles" })
+)
+<script id="filesScript" src="~/Content/UploadScript.js"></script>

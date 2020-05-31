@@ -1,0 +1,84 @@
+﻿
+@model ResumeApp.Models.Profile
+<div>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.FullName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FullName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PhoneNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Languages)
+        </dt>
+        <dd>
+            @foreach (var item in Model.Languages)
+            {
+                <button class="btn btn-sm"> @item.Text</button>
+            }
+        </dd>
+        <br />
+        <dt>
+            @Html.DisplayNameFor(model => model.Countries)
+        </dt>
+
+        <dd>
+            @foreach (var item in Model.Countries)
+            {
+                <button class="btn btn-sm"> @item.Text</button>
+            }
+        </dd>
+        <br />
+        <dt>
+            @Html.DisplayNameFor(model => model.Tools)
+        </dt>
+
+        <dd>
+            @foreach (var item in Model.Tools)
+            {
+                <button class="btn btn-sm"> @item.Text</button>
+            }
+        </dd>
+        <br />
+        <dt>
+            @Html.DisplayNameFor(model => model.Skills)
+        </dt>
+
+        <dd>
+            @foreach (var item in Model.Skills)
+            {
+                <button class="btn btn-sm"> @item.Text</button>
+            }
+        </dd>
+        <br />
+        <dt>
+            @Html.DisplayNameFor(model => model.Titles)
+        </dt>
+
+        <dd>
+            @foreach (var item in Model.Titles)
+            {
+                <button class="btn btn-sm"> @item.Text</button>
+            }
+        </dd>
+    </dl>
+</div>
+

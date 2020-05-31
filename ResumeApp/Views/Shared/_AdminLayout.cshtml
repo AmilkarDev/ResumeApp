@@ -24,7 +24,7 @@
     <!-- Site Icons -->
     <link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
     <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-    @*<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>*@
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="~/Content/siteContent/css/bootstrap.min.css">
     <!-- Site CSS -->
@@ -33,17 +33,17 @@
     <link rel="stylesheet" href="~/Content/siteContent/css/responsive.css">
     <!-- Custom CSS -->
     <link rel="stylesheet" href="~/Content/siteContent/css/custom.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <!-- Modernizer for Portfolio -->
-
-
-
-
+    <link href="~/Content/iziModal-master/css/iziModal.min.css" rel="stylesheet" />
+    <script src="~/Content/iziModal-master/js/iziModal.min.js"></script>
     <script src="~/Content/siteContent/js/modernizer.js"></script>
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryval")
     @RenderSection("Scripts", required: false)
+
     <script src="~/Content/iCheck/icheck.js"></script>
     <link href="~/Content/iCheck/flat/flat.css" rel="stylesheet" />
     <!--[if lt IE 9]>
@@ -136,9 +136,8 @@
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
                         <li><a class="active" href="@Url.Action("Index", "Home")">Home Admin</a></li>
-                        <li><a href="@Url.Action("Index", "Home")">Employées</a></li>
-                        <li><a href="@Url.Action("Index", "Home")">Notifications</a></li>
-                        <li><a href="@Url.Action("Index", "Home")">Candidats</a></li>
+                        <li><a href="@Url.Action("Mailing", "Home")">Mailing</a></li>
+                        <li><a href="@Url.Action("Index", "KnowledgeBases")">Base de Connaissance</a></li>
                         <li><a href="@Url.Action("Index", "Identity")">Utilisateurs</a></li>
                         <li><a href="@Url.Action("Index", "Roles")">Roles</a></li>
                     </ul>

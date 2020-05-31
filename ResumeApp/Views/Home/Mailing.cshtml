@@ -1,123 +1,147 @@
-﻿@model IEnumerable<ResumeApp.Models.ApplicationUser>
+﻿
 @using ResumeApp.Models;
 @{
     ViewBag.Title = "Mailing";
 }
 <div class="row" style="margin:15px">
     <div class="col-md-6">
-        @*<h2>Mailing</h2>*@
-        @{
-            Html.RenderAction("listFiles", "Home");
-        }
-        <h2 class="alert alert-danger"> Select Recipients</h2>
-        <table class="table" id="users">
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.FullName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Email)
-                </th>
-                <th> select </th>
-            </tr>
 
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FullName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.CheckBox(item.Email)
-                    </td>
-                </tr>
-            }
 
-        </table>
-        <button class="btn btn-primary" id="preview" onclick="validate()" style="display:inline;">Preview Full Email</button>
-        <button class="btn btn-primary" id="preview" onclick="Sendito()" style="display:inline;">Send Email</button>
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#home" onclick="removeUsers()">Sélection du CV</a></li>
+            <li><a data-toggle="tab" href="#menu1">Sélection d'Email</a></li>
+            <li><a data-toggle="tab" href="#menu2" onclick="removeHome()">Sélection des Destinataires</a></li>
+        </ul>
+
+
+
+        <div class="tab-content">
+            <div id="home" class="tab-pane fade in active">
+                <h2 class="alert alert-danger">Sélectionner les CVs à attacher</h2>
+                @*@Html.TextBox("search", null, new { id = "search" }) <input type="button" value="Search" class="btn btn-primary" id="getData" />*@
+                @Html.TextBox("CVfile", "", new { @class = "form-control", placeholder = "File Name" })
+                <div id="saveDiv">
+                    @*@{
+                            Html.RenderAction("listFiles", new { search = "" });
+                        }*@
+                </div>
+
+            </div>
+            <div id="menu1" class="tab-pane fade">
+                <h2 class="alert alert-danger">Sélectioner le Type du CV </h2>
+                <table id="cvs">
+                    <tr>
+                        CV au Collègue
+                        @Html.RadioButton("cvType", "cvtoColleague", new { @id = "checka" })
+                    </tr>
+                    <tr>
+                        cv au Client
+                        @Html.RadioButton("cvType", "cvtoClient", new { @id = "checka" })
+                    </tr>
+                    <tr>
+                        Rédiger un propre email
+                        @Html.RadioButton("cvType", "manualEmail", new { @id = "checka" })
+                    </tr>
+                </table>
+            </div>
+            <div id="menu2" class="tab-pane fade">
+                <h2 class="alert alert-danger"> Sélectionner les destinataires</h2>
+
+                @Html.TextBox("Recipient", "", new { @class = "form-control", placeholder = "destinataire" })
+                <div id="Recipients">
+                </div>
+            </div>
+        </div>
+
+        @*<button class="btn btn-primary" id="preview" onclick="validate()" style="display:inline;">Preview Full Email</button>*@
+        <button class="btn btn-primary text-center" id="preview" onclick="Sendito()" style="display:inline;">Envoyer Email</button>
 
     </div>
     <div class="col-md-6">
-        <h2>Recipients</h2>
-        <b style="display:inline;">To : </b> <h4 id="principalRecipient" style="display:inline;"></h4><br />
-        <b>CC : </b>
-        <table id="ccs" class="table"></table>
-        <h2 style="display:inline;">Subject : </h2><h4 id="subject" style="display:inline;"></h4>
-        <h2>Email Content</h2>
-        <iframe id="content" src="~/EmailTemplates/email.html" style="width:700px; height:500px;" frameborder="0"> </iframe>
-        <div id="editora" style="visibility:hidden" >
+        <h2>Email réultat</h2>
+        <b style="display:inline;">Destinateurs  : </b> <div id="principalRecipients" style="display:inline;"></div><br />
+        @*<b>CC Destinateurs : </b>*@
+        <b style="display:inline;">CC Destinateurs : </b> <div id="ccRecipients" style="display:inline;"></div><br />
 
+        @*<table id="ccs" class="table"></table>*@
+        @*<h2 style="display:inline;">Type : </h2><h4 id="subject" style="display:inline;"></h4>*@
+        <div>
+            <label style="display:inline;" for="sub" >Sujet : </label><input id="sub"  type="text" style="display:inline;" />
         </div>
-        <h2>Attachments</h2>
-        <table id="atts" class="table"></table>
+        <h2>Texte d'email</h2>
+        <textarea id="editora" name="editori" data-sample-short>Exemple d'email simple</textarea>
+
+        @*<div id="editora">
+
+        </div>*@
+        <h2>pièces jointes</h2>
+        <div id="attachments"></div>
     </div>
 </div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="myModalLabel">Affichage du CV </h4>
+            </div>
+            <div class="modal-body">
+                <div style="text-align: center;">
+                    <iframe style="width:500px; height:500px; " frameborder="0" id="frima"></iframe>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
+                @*<button type="button" class="btn btn-primary" onclick="saveFile()">Save file</button>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
 <script src="https://cdn.ckeditor.com/4.13.1/standard-all/ckeditor.js"></script>
+<script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
+<link href="~/Content/iziModal-master/css/iziModal.min.css" rel="stylesheet" />
+<script src="~/Content/iziModal-master/js/iziModal.min.js"></script>
+<link href="~/Content/iziToast-master/iziToast-master/dist/css/iziToast.min.css" rel="stylesheet" />
+<script src="~/Content/iziToast-master/iziToast-master/dist/js/iziToast.min.js"></script>
+
+
+<script src="~/Content/iCheck/icheck.js"></script>
+<link href="~/Content/iCheck/flat/flat.css" rel="stylesheet" />
 <script>
-    //$(document).ready(function () {
-        var chks = document.querySelectorAll("#users input[type='checkbox']");
-        //console.log(chks);
-        //alert(jQuery.fn.jquery);
-        $('input').iCheck({
-            checkboxClass: 'icheckbox_flat',
-            radioClass: 'iradio_flat'
-        });
-    //});
+    $(document).ready(function () {
+        $('.navbar-nav li a.active').removeClass('active');
+        $(".navbar-nav li a[href='/Home/Mailing']").addClass('active');
+        editora = CKEDITOR.replace('editora');
+        $("#Recipients").empty();
+        $("#saveDiv").load("/Home/listFiles");
 
-
-
-    $('input[type=radio][name=cvType]').change(function () {
-        if (this.value == 'manualEmail') {
-            alert("Allot Thai Gayo Bhai");
-        }
-        //else if (this.value == 'transfer') {
-        //    alert("Transfer Thai Gayo");
-        //}
     });
-    //$(document).ready(function () {
-    //$('input').iCheck('check', function () {
-    //    alert('Well done, Sir');
-    //});
-    //});
     var editora, html = ''; var config = {};
     $('.iradio_flat').on('ifChecked', function (event) {
         var col = $('input[name=cvType]:checked').val();
-        //$('#content').attr('src', "http://localhost:12964/EmailTemplates/manualEmail.html");
-       // alert('Hello World ' + col);
-
-
-
+        console.log(col);
         if (col == "cvtoColleague") {
-            $("#subject").text("Reviewing CVS");
-            $("div[id*='cke_editor']").hide();
-            document.getElementById('content').style.display = '';
-            $('#content').attr('src', "http://localhost:12964/EmailTemplates/email1.html");
+            $("#subject").text("To Colleague");
+            CKEDITOR.instances.editora.setData("To Colleague");
         }
         else {
             if (col == "cvtoClient") {
-                $("#subject").text("Suggested CVS");
-                $("div[id*='cke_editor']").hide();
-                document.getElementById('content').style.display = '';
-                $('#content').attr('src', "http://localhost:12964/EmailTemplates/email2.html");
+                $("#subject").text("To Client");
+                CKEDITOR.instances.editora.setData("Go to Client");
             }
             else {
-                $("#subject").text("Traitement des CVS");                
-                if(!editora) editora = CKEDITOR.replace('editora');
-                $("div[id*='cke_editor']").show();
-                document.getElementById('content').style.display = 'none';
-                document.getElementById('editora').style.display = '';
-                //document.getElementById('editor1').style.display = '';
-                //editora = CKEDITOR.replace('editor1');
-                // editor1 = CKEDITOR.appendTo('editor1', config, html);
-               // $('#content').attr('src', "http://localhost:12964/EmailTemplates/manualEmail.html");
-
+                $("#subject").text("Traitement des CVS");
+                CKEDITOR.instances.editora.setData("To Manual");
             }
 
         }
@@ -126,133 +150,111 @@
 
 
     function validate() {
-
-       // console.log(editora.getData());
-
         var chks = document.querySelectorAll("#files input[type='checkbox']");
         var values = [];
-        //console.log(values);
         var result = Array.prototype.every.call(chks, function (c) {
             if (c.checked) values.push(c.name);
             return c.value;
         });
-       // console.log(values);
-
-        
         var chks = document.querySelectorAll("#users input[type='checkbox']");
-        var val = [];
-       // console.log(val);
+        var val = "";
+        // console.log(val);
         var res = Array.prototype.every.call(chks, function (c) {
-            if (c.checked) val.push(c.name);
+            if (c.checked) {
+                // console.log(c.name);
+                val = val + c.name + " , ";
+            }
+
             return c.value;
         });
-        //console.log(val);
+        console.log(val);
+
+        var ccUsers = document.querySelectorAll("#ccsUsers input[type='checkbox']");
+        var ccResult = "";
+        // console.log(val);
+        var res = Array.prototype.every.call(ccUsers, function (c) {
+            if (c.checked) {
+                //console.log(c.name);
+                ccResult = ccResult + c.name + " , ";
+            }
+
+            return c.value;
+        });
+        console.log(ccResult);
 
 
-       
-       
         var col = $('input[name=cvType]:checked').val();
         //console.log('col=', col);
         var fullEmail = new Object();
-        fullEmail.Attachments = values  ;
+        fullEmail.Attachments = values;
         fullEmail.Recipients = val;
         fullEmail.Template = col;
 
-        $('#principalRecipient').text(val[0]);
-        $('#ccs tbody').empty();
-        var tbody = $('#ccs');
-        for (var i = 1; i < val.length; i++) {
-            tbody.append('<tr> <td>' + val[i] + '</td></tr>');
-        }
+        $('#principalRecipients').text(val);
+        $('#ccRecipients').text(ccResult);
+        //$('#ccs tbody').empty();
+        //var tbody = $('#ccs');
+        //for (var i = 1; i < val.length; i++) {
+        //    tbody.append('<tr> <td>' + val[i] + '</td></tr>');
+        //}
 
-        $('#atts tbody').empty();
-        var tbodyy = $('#atts');
+        var attachments = "";
         for (var i = 0; i < values.length; i++) {
-            tbodyy.append('<tr> <td>' + values[i] + '</td></tr>');
+            attachments = attachments + values[i] + " , ";
         }
-        //var vala = null;
-        //if (col == "cvtoColleague") {
-        //    $("#subject").text("Reviewing CVS");
-        //    $('#content').attr('src', "http://localhost:12964/EmailTemplates/email1.html");
-        //    vala = document.getElementById('content').contentWindow.document.documentElement.outerHTML;
-        //}
-        //else {
-        //    if (col == "cvtoClient") {
-        //        $("#subject").text("Suggested CVS");
-        //        $('#content').attr('src', "http://localhost:12964/EmailTemplates/email2.html"); 
-        //        vala = document.getElementById('content').contentWindow.document.documentElement.outerHTML;
-        //    }
-        //    else {
-        //        $("#subject").text("Traitement des CVS");
-        //        $('#content').attr('src', "http://localhost:12964/EmailTemplates/manualEmail.html");
-        //         vala = document.getElementById('content').contentWindow.document.documentElement.outerHTML;
-        //    }
-            
-        //}
-        //console.log(vala);
-        //if (fullEmail != null) {
-        //    $.ajax({
-        //        type: "POST",
-        //        url: "/Home/SendEmail",
-        //        data: JSON.stringify(fullEmail),
-        //        contentType: "application/json; charset=utf-8",
-        //        dataType: "json",
-        //        success: function (response) {
-        //            if (response != null) {
-        //               // alert(response);
-        //            } else {
-        //                alert("Something went wrong");
-        //            } 
-        //        },
-        //        failure: function (response) {
-        //            alert(response.responseText);
-        //        },
-        //        error: function (response) {
-        //            alert(response.responseText);
-        //        }
-        //    });
-        //}  
-        
-    }   
+        $('#attachments').text(attachments);
+    }
     function Sendito() {
-        var chks = document.querySelectorAll("#files input[type='checkbox']");
-        var values = [];
-        //console.log(values);
-        var result = Array.prototype.every.call(chks, function (c) {
-            if (c.checked) values.push(c.name);
-            return c.value;
+
+        var files = $(".Filebutton");
+        var recipients = $(".mybutton");
+        var ccrecipients = $(".myybutton");
+        var subject = $("#sub").val();
+        console.log(subject);
+        var listfiles = [];
+        var listRecipients = [];
+        var listCCrecipients = [];
+        ///console.log("diplay list of files");
+        $.each(files, function (key, value) {
+            listfiles.push(value.innerText);
+            //console.log(key + ": " + value.innerText);
         });
-        // console.log(values);
-
-
-        var chks = document.querySelectorAll("#users input[type='checkbox']");
-        var val = [];
-        // console.log(val);
-        var res = Array.prototype.every.call(chks, function (c) {
-            if (c.checked) val.push(c.name);
-            return c.value;
+        //console.log("diplay list of recipients");
+        $.each(recipients, function (key, value) {
+            listRecipients.push(value.innerText);
+            //console.log(key + ": " + value.innerText);
         });
-        //console.log(val);
-
-
-
-
-        var col = $('input[name=cvType]:checked').val();
-       // console.log('col=', col);
-        var fullEmail = new Object();
-        fullEmail.Attachments = values;
-        fullEmail.Recipients = val;
-        fullEmail.Subject = col;
-        //const vala = editor.getData();
-        
-        if (col == 'manualEmail') {
-            var vala = editora.getData();
-            fullEmail.EmailContent = vala;
-        }
-        
+       // console.log("diplay list of cc Recipients");
+        $.each(ccrecipients, function (key, value) {
+            listCCrecipients.push(value.innerText);
+            //console.log(key + ": " + value.innerText);
+        });
+        //console.log("Display Content");
+        var vala = editora.getData();
         //console.log(vala);
-
-
+        //var chks = document.querySelectorAll("#files input[type='checkbox']");
+        //var values = [];
+        //var result = Array.prototype.every.call(chks, function (c) {
+        //    if (c.checked) values.push(c.name);
+        //    return c.value;
+        //});
+        //var chks = document.querySelectorAll("#users input[type='checkbox']");
+        //var val = [];
+        //var res = Array.prototype.every.call(chks, function (c) {
+        //    if (c.checked) val.push(c.name);
+        //    return c.value;
+        //});
+        var col = $('input[name=cvType]:checked').val();
+        var fullEmail = new Object();
+        fullEmail.Attachments = listfiles;
+        fullEmail.Recipients = listRecipients;
+        fullEmail.ccrecipients = listCCrecipients;
+        fullEmail.Subject = $("#sub").val();;
+        fullEmail.EmailContent = vala;
+        //if (col == 'manualEmail') {
+        //    var vala = editora.getData();
+        //    fullEmail.EmailContent = vala;
+        //}
         if (fullEmail != null) {
             $.ajax({
                 type: "POST",
@@ -262,20 +264,75 @@
                 dataType: "json",
                 success: function (response) {
                     if (response != null) {
-                         alert(response);
+                        iziToast.success({
+                            title: 'Hola',
+                            message: 'Email Envoyé avec succés !',
+                            icon: 'fa fa-check-square',
+                        });
                     } else {
-                        alert("Something went wrong");
+                        iziToast.error({
+                            title: 'Ouch',
+                            message: 'On a rencontré un erreur , merci de vérifier les paramètres et réesayer dans quelques minutes !',
+                            icon: 'fa fa-times'
+                        });
                     }
                 },
                 failure: function (response) {
-                    alert(response.responseText);
+                    iziToast.error({
+                        title: 'Ouch',
+                        message: 'On a rencontré un erreur , merci de vérifier les paramètres et réesayer dans quelques minutes !',
+                        icon: 'fa fa-times'
+                    });
                 },
                 error: function (response) {
-                    alert(response.responseText);
+                    iziToast.error({
+                        title: 'Ouch',
+                        message: 'On a rencontré un erreur , merci de vérifier les paramètres et réesayer dans quelques minutes !',
+                        icon: 'fa fa-times'
+                    });
                 }
             });
-        }  
+        }
 
     }
-  
+
+
+    $(function () {
+
+        $("#CVfile").keyup(function (e) {
+            var n = $("#CVfile").val();
+            $.get("/Home/listFiles?search=" + n, function (r) {
+                $('#saveDiv').html(r);
+            });
+
+        });
+
+
+        $("#Recipient").keyup(function (e) {
+            var n = $("#Recipient").val();
+            $.get("/Home/Recipients?search=" + n, function (r) {
+                $('#Recipients').html(r);
+
+            });
+
+        });
+    });
+
+    function removeHome() {
+        $("#saveDiv").empty();
+        $("#Recipients").load("/Home/Recipients");
+    }
+    function removeUsers() {
+        $("#Recipients").empty();
+        $("#saveDiv").load("/Home/listFiles");
+    }
+
+    function setSource(str) {
+        var val = str.replace("'", "");
+        val = val.slice(0, -1);
+        console.log(val);
+        $('#frima').attr('src', "/UploadedFiles/" + val);
+        console.log('http://localhost:12964/UploadedFiles/' + val);
+    }
+
 </script>

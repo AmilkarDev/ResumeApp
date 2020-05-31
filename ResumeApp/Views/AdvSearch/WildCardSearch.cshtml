@@ -1,0 +1,34 @@
+﻿
+
+@model ResumeApp.Models.Helpers.SearchData
+
+
+@if (Model != null)
+{
+<p id="countResults" style="display:none">
+    <button type="button" class="btn btn-success" style="display:inline-block">Nombre des résultats <span class="badge">@Model.resultList.Results.Count</span></button>
+</p>
+
+    for (var i = 0; i < Model.resultList.Results.Count; i++)
+    {
+        var high = Model.resultList.Results[i].Highlights.Values;
+        <div class="panel panel-primary">
+            <div class=" panel panel-heading text-center">
+                @Html.DisplayFor(m => Model.resultList.Results[i].Document.metadata_storage_name, new { @class = "box1" })
+                ( <b>Score : </b> @Html.DisplayFor(m => Model.resultList.Results[i].Score, new { @class = "text-center" })  )
+            </div>
+            <div class="panel-body">
+                @foreach (var item in high)
+                {
+                    for (int j = 0; j < item.Count; j++)
+                    {
+                        @Html.Raw(item[j])
+                    }
+                }
+            </div>
+            <div class="panel-footer text-center">
+                <b>Score</b> @Html.DisplayFor(m => Model.resultList.Results[i].Score, new { @class = "text-center" })
+            </div>
+        </div>
+    }
+}

@@ -6,9 +6,11 @@ using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
+using Newtonsoft.Json;
 using ResumeApp.Models;
 namespace ResumeApp.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class RolesController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -61,7 +63,18 @@ namespace ResumeApp.Controllers
             var mm = RoleManager.Roles;
             return View(RoleManager.Roles);
         }
+        public ActionResult listRoles()
+        {
+            var mm = RoleManager.Roles;
+            return PartialView(mm);
+        }
 
+        public JsonResult GetbyID(string ID)
+        {
+            ApplicationRole mm = RoleManager.Roles.Where(role=>role.Id==ID).FirstOrDefault()  ;
+            var rola = JsonConvert.SerializeObject(mm, Formatting.None);
+            return Json(rola,JsonRequestBehavior.AllowGet);
+        }
         /// <summary>
         /// get the details of a role
         /// </summary>
@@ -107,8 +120,8 @@ namespace ResumeApp.Controllers
         //
         // POST: /Roles/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create(RoleViewModel roleViewModel)
+        //[ValidateAntiForgeryToken]
+        public async Task<JsonResult> Create(RoleViewModel roleViewModel)
         {
             if (ModelState.IsValid)
             {
@@ -118,11 +131,12 @@ namespace ResumeApp.Controllers
                 if (!roleresult.Succeeded)
                 {
                     ModelState.AddModelError("", roleresult.Errors.First());
-                    return View();
+                    return Json("Encountered an error creating a new role", JsonRequestBehavior.AllowGet);
                 }
-                return RedirectToAction("Index");
+                return Json("Role created successfully ", JsonRequestBehavior.AllowGet);
             }
-            return View();
+            return Json("Encountered an error creating a new role", JsonRequestBehavior.AllowGet);
+
         }
 
         /// <summary>
@@ -153,8 +167,8 @@ namespace ResumeApp.Controllers
         // POST: /Roles/Edit/5
         [HttpPost]
 
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Name,Id,Description")] RoleViewModel roleModel)
+        //[ValidateAntiForgeryToken]
+        public async Task<JsonResult> Edit([Bind(Include = "Name,Id,Description")] RoleViewModel roleModel)
         {
             if (ModelState.IsValid)
             {
@@ -163,9 +177,9 @@ namespace ResumeApp.Controllers
                 // Update the new Description property:
                 role.Description = roleModel.Description;
                 await RoleManager.UpdateAsync(role);
-                return RedirectToAction("Index");
+                return Json("Role Updated Successfully ",JsonRequestBehavior.AllowGet);
             }
-            return View();
+            return Json("Failed to update the specified role , please try again later ", JsonRequestBehavior.AllowGet);
         }
 
         /// <summary>
@@ -174,56 +188,49 @@ namespace ResumeApp.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         // GET: /Roles/Delete/5
-        [HttpGet]
-        public async Task<ActionResult> Delete(string id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var role = await RoleManager.FindByIdAsync(id);
-            if (role == null)
-            {
-                return HttpNotFound();
-            }
-            return View(role);
-        }
+        //[HttpGet]
+        //public async Task<ActionResult> Delete(string id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    var role = await RoleManager.FindByIdAsync(id);
+        //    if (role == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(role);
+        //}
 
         //
         // POST: /Roles/Delete/5
-        [HttpPost]
-        [ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(string id, string deleteUser)
+        [HttpPost, ActionName("Delete")]
+        //[ValidateAntiForgeryToken]
+        public async Task<JsonResult> Delete(string id)
         {
             if (ModelState.IsValid)
             {
                 if (id == null)
                 {
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                    return Json("We encountered an error removing the specified role ! Please try again later ",JsonRequestBehavior.AllowGet);
                 }
                 var role = await RoleManager.FindByIdAsync(id);
                 if (role == null)
                 {
-                    return HttpNotFound();
+                    return Json("We encountered an error removing the specified role ! Please try again later ", JsonRequestBehavior.AllowGet);
                 }
                 IdentityResult result;
-                if (deleteUser != null)
-                {
+
                     result = await RoleManager.DeleteAsync(role);
-                }
-                else
-                {
-                    result = await RoleManager.DeleteAsync(role);
-                }
                 if (!result.Succeeded)
                 {
                     ModelState.AddModelError("", result.Errors.First());
-                    return View();
+                    return Json("We encountered an error removing the specified role ! Please try again later ", JsonRequestBehavior.AllowGet);
                 }
-                return RedirectToAction("Index");
+                return Json("Role removed successfully !!! ", JsonRequestBehavior.AllowGet);
             }
-            return View();
+            return Json("We encountered an error removing the specified role ! Please try again later ", JsonRequestBehavior.AllowGet);
         }
     }
 }

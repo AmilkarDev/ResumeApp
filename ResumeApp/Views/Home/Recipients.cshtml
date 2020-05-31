@@ -1,0 +1,199 @@
+﻿
+@using PagedList;
+
+@using PagedList.Mvc;
+
+@model IPagedList<ResumeApp.Models.ApplicationUser>
+
+<script src="~/Content/iCheck/icheck.js"></script>
+<link href="~/Content/iCheck/flat/flat.css" rel="stylesheet" />
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayName("Nom")
+        </th>
+        <th>
+            @Html.DisplayName("Email")
+        </th>
+        <th> Principale </th>
+        <th> En CC </th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td id="users">
+                @Html.CheckBox(item.Email, new { id = "usersCheck" })
+            </td>
+            <td id="ccsUsers">
+                @Html.CheckBox(item.Email, new { id = "ccsusersCheck" })
+            </td>
+        </tr>
+    }
+
+</table>
+@*@Html.PagedListPager(Model, pageNumber => Url.Action("Mailing", new { search = Request.QueryString["search"], pageNumber }))*@
+@Html.PagedListPager(
+    Model,
+    pageNumber => Url.Action("Recipients", new { pageNumber = pageNumber }),
+    PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions(){  HttpMethod = "GET", UpdateTargetId = "Recipients" })
+)
+
+<script id="usersScript" src="~/Content/usersScript.js"></script>
+@*<script id="usersScript">
+        //    function flyNow() {
+        //    $('input').iCheck({
+        //        checkboxClass: 'icheckbox_flat',
+        //        radioClass: 'iradio_flat'
+        //    });
+
+        //}
+
+
+            $(document).ready(function () {
+
+
+                var inp = $('.icheckbox_flat').each(function () {
+                    $(this).removeClass('checked');
+                });
+
+                $('.mybutton').each(function () {
+                    var ss = "'" + $.trim(this.innerText) + "'";
+                    var final = "#usersCheck[name=" + ss + "]";
+                    var inp = $(final)[0];
+                    if (typeof inp != 'undefined') {
+                        // console.log(inp.parentElement);
+                        var pr = (inp.parentElement);
+                        $(pr).addClass('checked');
+                        // console.log(pr);
+                    }
+                });
+                $('.myybutton').each(function () {
+                    var ss = "'" + $.trim(this.innerText) + "'";
+                    var final = "#ccsusersCheck[name=" + ss + "]";
+                    var inp = $(final)[0];
+                    if (typeof inp != 'undefined') {
+                        //console.log(inp.parentElement);
+                        var pr = (inp.parentElement);
+                        $(pr).addClass('checked');
+                        //console.log(pr);
+                    }
+                });
+
+
+            });
+
+
+
+
+            $('.icheckbox_flat').on('ifChecked', function (event) {
+                console.log(event.target.id);
+                switch (event.target.id) {
+
+                    case 'usersCheck':
+                        // $('#principalRecipients').append('<span class="label label-default">  ' + event.target.name + '</span > ')
+                        var email = event.target.name;
+                        var str = ":contains('" + email + "')";
+                        // console.log($('#principalRecipients button').filter(str).length);
+                        if ($('#principalRecipients button').filter(str).length == 0) {
+                            $('#principalRecipients').append(
+
+
+
+                                '<button type="button" class="btn btn-default btn-sm mybutton">' +
+                                event.target.name +
+                                '   <span class="glyphicon glyphicon-remove-sign" onclick=remove(this)></span>' +
+                                ' </button>'
+                            )
+                        }
+
+                        break;
+                    case 'ccsusersCheck':
+                        // $('#ccRecipients').append('<span class="label label-default">' + event.target.name + '</span > ')
+                        var email = event.target.name;
+                        var str = ":contains('" + email + "')";
+                        // console.log($('#principalRecipients button').filter(str).length);
+                        if ($('#ccRecipients button').filter(str).length == 0) {
+                            $('#ccRecipients').append(
+                                '<button type="button" class="btn btn-default btn-sm myybutton">' +
+                                event.target.name +
+                                '   <span class="glyphicon glyphicon-remove-sign" onclick=removee(this)></span>' +
+                                ' </button>'
+                            )
+                        }
+
+                        break;
+
+
+                    //case 'fileCheck':
+                    //    // $('#ccRecipients').append('<span class="label label-default">' + event.target.name + '</span > ')
+                    //    var fileName = event.target.name;
+                    //    var str = ":contains('" + fileName + "')";
+                    //    console.log($('#attachments button').filter(str).length);
+                    //    if ($('#attachments button').filter(str).length == 0) {
+                    //        $('#attachments').append(
+                    //            '<button type="button" class="btn btn-default btn-sm Filebutton">' +
+                    //            event.target.name +
+                    //            '   <span class="glyphicon glyphicon-remove-sign" onclick=removeFile(this)></span>' +
+                    //            ' </button>'
+                    //        )
+                    //    }
+                    //    break;
+                }
+            });
+
+            $('.icheckbox_flat').on('ifUnchecked', function (event) {
+
+                //console.log(event.target);
+                var email = event.target.name;
+                var str = ":contains('" + email + "')";
+                console.log(str);
+                switch (event.target.id) {
+
+                    case 'usersCheck':
+                        $('#principalRecipients button').filter(str).remove();
+                        break;
+                    case 'ccsusersCheck':
+                        $('#ccRecipients button').filter(str).remove();
+                        break;
+                    case 'fileCheck':
+                        $('#attachments button').filter(str).remove();
+                        break;
+
+                }
+            });
+            //function remove(e) {
+            //    var ss = "'" + $.trim(e.parentElement.innerText) + "'";
+            //    var final = "#usersCheck[name=" + ss + "]";
+            //    var inp = $(final)[0];
+            //    if (typeof inp != 'undefined') {
+            //        $(inp.parentElement).removeClass('checked');
+            //    }
+            //    e.parentElement.remove();
+            //}
+            //function removee(e) {
+            //    var ss = "'" + $.trim(e.parentElement.innerText) + "'";
+            //    var final = "#ccsusersCheck[name=" + ss + "]";
+            //    var inp = $(final)[0];
+            //    if (typeof inp != 'undefined') {
+            //        $(inp.parentElement).removeClass('checked');
+            //    }
+            //    e.parentElement.remove();
+            //}
+            //function removeFile(e) {
+            //    var ss = "'" + $.trim(e.parentElement.innerText) + "'";
+            //    var final = "#fileCheck[name=" + ss + "]";
+            //    var inp = $(final)[0];
+            //    if (typeof inp != 'undefined') {
+            //        $(inp.parentElement).removeClass('checked');
+            //    }
+            //    e.parentElement.remove();
+            //}
+    </script>*@
+

@@ -76,7 +76,7 @@ namespace ResumeApp.Controllers
             var user = await UserManager.FindByIdAsync(id);
 
             ViewBag.RoleNames = await UserManager.GetRolesAsync(user.Id);
-            return View(user);
+            return PartialView(user);
         }
 
 
@@ -103,7 +103,7 @@ namespace ResumeApp.Controllers
                 return HttpNotFound();
             }
             var userRoles = await UserManager.GetRolesAsync(user.Id);
-            return View(new EditUserViewModel()
+            return PartialView(new EditUserViewModel()
             {
                 Id = user.Id,
                 Email = user.Email,
@@ -169,6 +169,66 @@ namespace ResumeApp.Controllers
             }
             ModelState.AddModelError("", "Something failed.");
             return View();
+        }
+
+
+        [HttpPost]
+        //[ValidateAntiForgeryToken]
+        public async Task<JsonResult> EditUser( EditUserViewModel editUser,  string[] selectedRole)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await UserManager.FindByIdAsync(editUser.Id);
+                if (user == null)
+                {
+                    return Json("No existing user with the specified Id", JsonRequestBehavior.AllowGet);
+                }
+                user.FullName = editUser.FullName;
+                user.UserName = editUser.UserName;
+                user.Email = editUser.Email;
+                user.StreetAddress = editUser.StreetAddress;
+                user.City = editUser.City;
+                user.State = editUser.State;
+                user.PostalCode = editUser.PostalCode;
+
+                var userRoles = await UserManager.GetRolesAsync(user.Id);
+
+                selectedRole = selectedRole ?? new string[] { };
+
+                var result = await UserManager.AddToRolesAsync(user.Id, selectedRole.Except(userRoles).ToArray<string>());
+
+                if (!result.Succeeded)
+                {
+                    ModelState.AddModelError("", result.Errors.First());
+                    return Json("We Encountered an Error , please retry Late", JsonRequestBehavior.AllowGet);
+                }
+                result = await UserManager.RemoveFromRolesAsync(user.Id, userRoles.Except(selectedRole).ToArray<string>());
+
+                if (!result.Succeeded)
+                {
+                    ModelState.AddModelError("", result.Errors.First());
+                    return Json("We Encountered an Error , please retry Later",JsonRequestBehavior.AllowGet);
+                }
+                return Json("User Successfully Updated", JsonRequestBehavior.AllowGet);
+            }
+            return Json("We Encountered an Error , please retry Later", JsonRequestBehavior.AllowGet);
+        }
+
+
+        public async Task<JsonResult> RemoveUser(string id)
+        {
+            var user = await UserManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return Json("We encountered an error removing the specified user! Please try again later !");
+            }
+            var userRoles = await UserManager.GetRolesAsync(user.Id);
+            var result = await UserManager.RemoveFromRolesAsync(user.Id, userRoles.ToArray<string>());
+            if (result.Succeeded)
+            {
+                var resulta =  UserManager.DeleteAsync(user);
+            }
+            return Json("User Successfully Removed !");
         }
     }
 }
