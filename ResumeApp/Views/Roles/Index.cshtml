@@ -64,9 +64,12 @@
         $("#rolesDiv").load("/Roles/listRoles");
     });
     $("#myBtn").click(function () {
+        $('#btnUpdate').hide();
+        $('#btnAdd').show();
         $('#myModal').modal('show');
     });
     function AddRole() {
+
         var newRole = {
             Name: $('#Name').val(),
             Description: $('#Description').val(),
@@ -122,7 +125,7 @@
         });
     }
     function Delete(ID) {
-        var ans = confirm("Are you sure you want to delete this Record?");
+        var ans = confirm("t'es sure de supprimer ce role?");
         if (ans) {
             $.ajax({
                 url: "/Roles/Delete/" + ID,

@@ -4,7 +4,7 @@
     ViewBag.Title = "UpploadFiles";
 }
 <div class="alert alert-danger" role="alert" style="margin:15px">
-    Upload CVs
+    Ajouters des CVs
 </div>
 
 @using (Html.BeginForm("UploadFiles", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -111,20 +111,6 @@
 
 
 
-
-
-
-
-
-
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-@*<script src="~/Scripts/jquery-3.3.1.min.js"></script>
-    <script src="~/Scripts/jquery.validate.min.js"></script>
-    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>*@
-
 @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></Script>*@
 <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.min.js")" type="text/javascript"></script>
 <link href="~/Content/iziToast-master/iziToast-master/dist/css/iziToast.min.css" rel="stylesheet" />
@@ -133,50 +119,10 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 <script>
-
-
     $(document).ready(function () {
         $('.navbar-nav li a.active').removeClass('active');
         $(".navbar-nav li a[href='/Home/UploadFiles']").addClass('active');
         $("#displayFiles").load("/Home/DisplayFiles");
     });
-
-
-           // $('#abc_frame').attr('src', url);
-            //function setSource(str) {
-            //    var val = str.replace("'", "");
-            //    val = val.slice(0, -1);
-            //    $('#frima').attr('src', "/UploadedFiles/" + val);
-            //    //$('#frima').reload();
-            //    console.log('http://localhost:12964/UploadedFiles/' + val);
-            //}
-
-        @*function Details(id) {
-            //console.log(id);
-            var n = id.indexOf('.pdf');
-            //console.log(n);
-            var x = id.slice(0, n);
-            //console.log(x);
-             $.get("@Url.Action("Details","Home")/" + Id,
-                 function (data) { $('.modal-details').html(data); }
-        )
-            }*@
-    @*function removeFile(id) {
-        var n = id.indexOf('.');
-        var titi = id.slice(0, n);
-          $.get("@Url.Action("removeFile","Home")/" + titi,
-              function (data) {
-                 // console.log(data);
-                  $("#displayFiles").empty();
-                  $("#displayFiles").load("/Home/DisplayFiles");
-                  iziToast.success({
-                      title: 'Hola',
-                      message: 'Profil supprimé avec succés !',
-                      icon: 'fa fa-check-square',
-                  });
-                  //location.reload();
-              }
-        )
-    }*@
 </script>
 

@@ -234,7 +234,7 @@ namespace ResumeApp.Controllers
             {
                 if (!newList.Contains(str))
                 {
-                    var lang = db.Languages.Single(c => c.Text == str);
+                    var lang = db.Languages.FirstOrDefault(c => c.Text == str);
                     cc.Languages.Remove(lang);
                 }
             }

@@ -1,7 +1,7 @@
 ﻿
 @{
     ViewBag.Title = "Search";
-    Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
+   Layout = "~/Views/Shared/_EmployeeLayout.cshtml";
 }
 
 <div class="Insider">
@@ -151,14 +151,70 @@
 <link href="~/Content/iziToast-master/iziToast-master/dist/css/iziToast.min.css" rel="stylesheet" />
 <script src="~/Content/iziToast-master/iziToast-master/dist/js/iziToast.min.js"></script>
 <script type="text/javascript">
-
+    //$('input').iCheck({
+    //    checkboxClass: 'icheckbox_flat',
+    //    radioClass: 'iradio_flat'
+    //});
+    //var cvFile = {};
     $(document).ready(function () {
 
         $('.navbar-nav li a.active').removeClass('active');
         $(".navbar-nav li a[href='/Search']").addClass('active');
         $("#displayFiles").load("/search/DisplayFiles");
-
+        $('input').iCheck('uncheck');
+        cvFile = {};
     });
+
+
+
+    function Details() {
+        if (jQuery.isEmptyObject(cvFile))
+            $('.modal-details').html('<div class="alert alert-danger">Veuillez sélectionner un profil pour afficher ses détails !</div>');
+        else {
+            $.get("Search/Details/" + cvFile.Id,
+                function (data) { $('.modal-details').html(data); }
+            );
+        }
+    }
+    function setSource() {
+        if (jQuery.isEmptyObject(cvFile))
+            iziToast.error({
+                title: 'Ouch',
+                message: 'Veuillez sélectionner un profil pour afficher !',
+                icon: 'fa fa-times'
+            });
+        else {
+            var val = cvFile.name.replace("'", "");
+            $('#frima').attr('src', "/UploadedFiles/" + val);
+        }
+    }
+    function Download() {
+        if (jQuery.isEmptyObject(cvFile))
+            iziToast.error({
+                title: 'Ouch',
+                message: 'Veuillez sélectionner un profil pour télécharger son CV !',
+                icon: 'fa fa-times'
+            });
+        else {
+            var myStr = cvFile.name;
+            var s = myStr.indexOf(".");
+            var subStr = myStr.substring(0, s);
+            window.location = '/Home/Download/' + subStr;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
     ///// zero row 
     $("#SearchKeyPhrase").typeahead({
         source: function (query, process) {
@@ -175,8 +231,8 @@
         updater: function (item) {
             var selectedkPhrase = map[item].data;
             //$("#title").text("Selected : " + selectedLanguage);
-            $("#final-search").append('<button type="button" class="btn btn-default btn-sm" id="' + selectedkPhrase + '">' + item + '<span class="glyphicon glyphicon-remove-sign" onclick=removeKeyPhrase(this)></span> </button>')
-            $.get("FixSearchKeyPhrases/" + selectedkPhrase, function (data, status) {
+            $("#final-search").append('<button type="button" class="label label-primary" id="' + selectedkPhrase + '">' + item + '<span class="glyphicon glyphicon-remove-sign" onclick=removeKeyPhrase(this)></span> </button>')
+            $.get("search/FixSearchKeyPhrases/" + selectedkPhrase, function (data, status) {
                 $("#displayFiles").load("/search/DisplayFiles");
                 $('#SearchKeyPhrase').val('');
             });
@@ -189,7 +245,7 @@
             var skills = [];
             map = {};
             return $.post('/search/SearchSkills', { query: query }, function (data) {
-                console.log(data);
+               // console.log(data);
                 $.each(data, function (i, skill) {
                     //console.log("skill is " +skill);
                     map[skill.value] = skill;
@@ -199,12 +255,12 @@
             });
         },
         updater: function (item) {
-            //console.log("updater item is " + item);
+            console.log("updater item is " + item);
             var selectedSkill = map[item].data;
-            //$("#skill").text("Selected : " + selectedSkill);
+            $("#skill").text("Selected : " + selectedSkill);
             $("#final-search").append('<button type="button" class="label label-primary" id="' + selectedSkill + '">' + item + '<span class="glyphicon glyphicon-remove-sign" onclick=removeSkill(this)></span> </button>')
 
-            $.get("FixSearchskills/" + selectedSkill, function (data, status) {
+            $.get("search/FixSearchskills/" + selectedSkill, function (data, status) {
                 $("#displayFiles").load("/search/DisplayFiles");
                 $('#Search').val('');
             });
@@ -227,7 +283,7 @@
             var selectedTool = map[item].data;
             //$("#tool").text("Selected : " + selectedTool);
             $("#final-search").append('<button type="button" class="btn btn-default" id="' + selectedTool + '">' + item + '<span class="glyphicon glyphicon-remove-sign" onclick=removeTool(this)></span> </button>')
-            $.get("FixSearchTools/" + selectedTool, function (data, status) {
+            $.get("search/FixSearchTools/" + selectedTool, function (data, status) {
                 $("#displayFiles").load("/search/DisplayFiles");
                 $('#searchTool').removeAttr('value');
             });
@@ -249,8 +305,8 @@
         updater: function (item) {
             var selectedTitle = map[item].data;
             // $("#title").text("Selected : " + selectedTitle);
-            $("#final-search").append('<button type="button" class="label label-successt" id="' + selectedTitle + '">' + item + '<span class="glyphicon glyphicon-remove-sign" onclick=removeTitle(this)></span> </button>')
-            $.get("FixSearchTitles/" + selectedTitle, function (data, status) {
+            $("#final-search").append('<button type="button" class="label label-success" id="' + selectedTitle + '">' + item + '<span class="glyphicon glyphicon-remove-sign" onclick=removeTitle(this)></span> </button>')
+            $.get("search/FixSearchTitles/" + selectedTitle, function (data, status) {
                 $("#displayFiles").load("/search/DisplayFiles");
                 $('#SearchTitle').val('');;
             });
@@ -274,7 +330,7 @@
             var selectedCountry = map[item].data;
             //$("#country").text("Selected : " + selectedCountry);
             $("#final-search").append('<button type="button" class="label label-success" id="' + selectedCountry + '">' + item + '<span class="glyphicon glyphicon-remove-sign" onclick=removeCountry(this)></span> </button>')
-            $.get("FixSearchCountries/" + selectedCountry, function (data, status) {
+            $.get("search/FixSearchCountries/" + selectedCountry, function (data, status) {
                 $("#displayFiles").load("/search/DisplayFiles");
                 $('#SearchCountry').val('');;
             });
@@ -297,7 +353,7 @@
             var selectedOrganization = map[item].data;
             //$("#organization").text("Selected : " + selectedOrganization);
             $("#final-search").append('<button type="button" class="label label-info" id="' + selectedOrganization + '">' + item + '<span class="glyphicon glyphicon-remove-sign" onclick=removeOrganization(this)></span> </button>')
-            $.get("FixSearchOrganizations/" + selectedOrganization, function (data, status) {
+            $.get("search/FixSearchOrganizations/" + selectedOrganization, function (data, status) {
                 $("#displayFiles").load("/search/DisplayFiles");
                 $('#SearchOrganization').val('');;
             });
@@ -326,9 +382,9 @@
             var selectedLocation = map[item].data;
             $("#location").text("Selected : " + selectedLocation);
             $("#final-search").append('<button type="button" class="label label-warning" id="' + selectedLocation + '">' + item + '<span class="glyphicon glyphicon-remove-sign" onclick=removeLocation(this)></span> </button>')
-            $.get("FixSearchLocations/" + selectedLocation, function (data, status) {
+            $.get("search/FixSearchLocations/" + selectedLocation, function (data, status) {
                 $("#displayFiles").load("/search/DisplayFiles");
-                $('#SearchLocation').val('');;
+                $('#SearchLocation').val('');
 
             });
             return item;
@@ -351,7 +407,7 @@
             var selectedEmail = map[item].data;
             //$("#email").text("Selected : " + selectedEmail);
             $("#final-search").append('<button type="button" class="label label-danger" id="' + selectedEmail + '">' + item + ' <span class="glyphicon glyphicon-remove-sign" onclick=removeEmail(this)></span></button>')
-            $.get("FixSearchEmails/" + selectedEmail, function (data, status) {
+            $.get("search/FixSearchEmails/" + selectedEmail, function (data, status) {
                 $("#displayFiles").load("/search/DisplayFiles");
                 $('#SearchEmail').val('');;
             });
@@ -374,7 +430,7 @@
             var selectedName = map[item].data;
             //$("#name").text("Selected : " + selectedName);
             $("#final-search").append('<button type="button" class="label label-default" id="' + selectedName + '">' + item + '<span class="glyphicon glyphicon-remove-sign" onclick=removeName(this)></span> </button>')
-            $.get("FixSearchNames/" + selectedName, function (data, status) {
+            $.get("search/FixSearchNames/" + selectedName, function (data, status) {
                 $("#displayFiles").load("/search/DisplayFiles");
                 $('#SearchName').val('');;
 
@@ -398,7 +454,7 @@
             var selectedLanguage = map[item].data;
             //$("#title").text("Selected : " + selectedLanguage);
             $("#final-search").append('<button type="button" class="label label-primary" id="' + selectedLanguage + '">' + item + '<span class="glyphicon glyphicon-remove-sign" onclick=removeLanguage(this)></span> </button>')
-            $.get("FixSearchLanguages/" + selectedLanguage, function (data, status) {
+            $.get("search/FixSearchLanguages/" + selectedLanguage, function (data, status) {
                 $("#displayFiles").load("/search/DisplayFiles");
                 $('#SearchLanguage').val('');;
             });
@@ -416,8 +472,9 @@
        // e.parentElement.remove();
     }
     function removeLanguage(e) {
+        console.log("languages removal ");
         //console.log(e.parentElement.id);
-        $.get("removeLanguage/" + e.parentElement.id, function (data, status) {
+        $.get("Search/removeLanguage/" + e.parentElement.id, function (data, status) {
             //console.log(status);
             success: {
                 iziToast.success({
@@ -431,7 +488,7 @@
          e.parentElement.remove();
     }
     function removeName(e) {
-        $.get("removeName/" + e.parentElement.id, function (data, status) {
+        $.get("Search/removeName/" + e.parentElement.id, function (data, status) {
             //console.log(status);
             success: {
                 iziToast.success({
@@ -445,7 +502,7 @@
         e.parentElement.remove();
     }
     function removeEmail(e) {
-        $.get("removeEmail/" + e.parentElement.id, function (data, status) {
+        $.get("Search/removeEmail/" + e.parentElement.id, function (data, status) {
             //console.log(status);
             success: {
                 iziToast.success({
@@ -460,7 +517,7 @@
     }
 
     function removeCountry(e) {
-        $.get("removeCountry/" + e.parentElement.id, function (data, status) {
+        $.get("Search/removeCountry/" + e.parentElement.id, function (data, status) {
             //console.log(status);
             success: {
                 iziToast.success({
@@ -475,7 +532,7 @@
     }
 
     function removeOrganization(e) {
-        $.get("removeOrganization/" + e.parentElement.id, function (data, status) {
+        $.get("Search/removeOrganization/" + e.parentElement.id, function (data, status) {
             //console.log(status);
             success: {
                 iziToast.success({
@@ -489,7 +546,7 @@
         e.parentElement.remove();
     }
     function removeLocation(e) {
-        $.get("removeLocation/" + e.parentElement.id, function (data, status) {
+        $.get("Search/removeLocation/" + e.parentElement.id, function (data, status) {
             //console.log(status);
             success: {
                 iziToast.success({
@@ -503,7 +560,7 @@
         e.parentElement.remove();
     }
     function removeSkill(e) {
-        $.get("removeSkill/" + e.parentElement.id, function (data, status) {
+        $.get("Search/removeSkill/" + e.parentElement.id, function (data, status) {
             //console.log(status);
             success: {
                 iziToast.success({
@@ -517,7 +574,7 @@
         e.parentElement.remove();
     }
     function removeTitle(e) {
-        $.get("removeTitle/" + e.parentElement.id, function (data, status) {
+        $.get("Search/removeTitle/" + e.parentElement.id, function (data, status) {
             //console.log(status);
             success: {
                 iziToast.success({
@@ -531,7 +588,7 @@
         e.parentElement.remove();
     }
     function removeTool(e) {
-        $.get("removeTool/" + e.parentElement.id, function (data, status) {
+        $.get("Search/removeTool/" + e.parentElement.id, function (data, status) {
             //console.log(status);
             success: {
                 iziToast.success({
@@ -546,7 +603,7 @@
 
     }
     function removeKeyPhrase(e) {
-        $.get("removeKeyPhrase/" + e.parentElement.id, function (data, status) {
+        $.get("Search/removeKeyPhrase/" + e.parentElement.id, function (data, status) {
             //console.log(status);
             success: {
                 iziToast.success({

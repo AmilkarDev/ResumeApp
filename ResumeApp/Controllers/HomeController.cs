@@ -1,6 +1,8 @@
 ﻿using iTextSharp.text.pdf;
 using iTextSharp.text.pdf.parser;
 using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Azure.Storage;
+using Microsoft.Azure.Storage.Blob;
 using MoreLinq;
 using PagedList;
 using ResumeApp.Helpers;
@@ -21,7 +23,6 @@ using System.Web;
 using System.Web.Hosting;
 using System.Web.Mvc;
 using TikaOnDotNet.TextExtraction;
-
 namespace ResumeApp.Controllers
 {
     public class HomeController : Controller
@@ -135,7 +136,11 @@ namespace ResumeApp.Controllers
         {
             List<string> existingFiles = ctx.CvFiles.Select(x => x.fileName).ToList();
             //Ensure model state is valid  
-            if (ModelState.IsValid && files!=null)
+            if (ModelState.IsValid && files != null)
+
+                UploadFilesToAzureStorage(files);
+
+
             {   //iterating through multiple file collection   
                 foreach (HttpPostedFileBase file in files)
                 {
@@ -161,7 +166,23 @@ namespace ResumeApp.Controllers
             }
             return View();
         }
+        private void UploadFilesToAzureStorage(IEnumerable<HttpPostedFileBase> files)
+        {
+            CloudStorageAccount storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=firstaccount;AccountKey=HG5VgrWBbgzdCXsQ1szWP1XI1XzCaHgOGbzSmo2So7wNxr19E2+EeVzVv/6l7lg6E7kJLkzSv7CjSSJVeKddJQ==;EndpointSuffix=core.windows.net");
 
+            CloudBlobClient BlobClient = storageAccount.CreateCloudBlobClient();
+            CloudBlobContainer storageContainer = BlobClient.GetContainerReference("firstcontainer");
+
+            foreach (var file in files)
+            {
+                if (file?.ContentLength > 0)
+                {
+                    string fileName = System.IO.Path.GetFileName(file.FileName);
+                    CloudBlockBlob blockBlob = storageContainer.GetBlockBlobReference(fileName);
+                    blockBlob.UploadFromStream(file.InputStream);
+                }
+            }
+        }
         public ActionResult DisplayFiles(string search, int? pageNumber)
         {
             var listacv = new List<CvFile>();
@@ -227,6 +248,7 @@ namespace ResumeApp.Controllers
             pr.Nationality = profile.Nationality;
             pr.FullName = profile.FullName;
             pr.Email = profile.Email;
+            pr.Validated = true;
             ctx.SaveChanges();
             return Json("enregistré avec succés ", JsonRequestBehavior.AllowGet);
         }
@@ -276,10 +298,12 @@ namespace ResumeApp.Controllers
             }
             
             Profile pr = ctx.Profiles.Where(x => x.CvFileId == file.Id).FirstOrDefault();
-            ctx.Entry(pr).Collection(s => s.Entities).Load();
+            ctx.Entry(pr).Collection(s => s.Entities).Load() ;
             ctx.Entry(pr).Collection(s => s.KeyPhrases).Load();
             //foreach (var item in pr.Entities) ctx.Entities.Remove(item);
             //foreach (var item in pr.KeyPhrases) ctx.KeyPhrases.Remove(item);
+            pr.Entities.ToList().ForEach(r => ctx.Entities.Remove(r));
+            pr.KeyPhrases.ToList().ForEach(r => ctx.KeyPhrases.Remove(r));
             ctx.Profiles.Remove(pr);
             ctx.CvFiles.Remove(file);
             ctx.SaveChanges();
@@ -301,12 +325,18 @@ namespace ResumeApp.Controllers
             Profile pp = new Profile();
             try
             {
-                using (PdfReader reader = new PdfReader(path))
-                {
-                    StringBuilder text = new StringBuilder();
-                    List<string> ll = new List<string>();
-                    string txt = PdfTextExtractor.GetTextFromPage(reader, 1);
-                    var ll1 = txt.Split('\n');
+                //using (PdfReader reader = new PdfReader(path))
+                //{
+                    //StringBuilder text = new StringBuilder();
+                    //List<string> ll = new List<string>();
+                    //string txt = PdfTextExtractor.GetTextFromPage(reader, 1);
+                    var textExtractor = new TextExtractor();
+                    var wordDocContents = textExtractor.Extract(path);
+                    string content = wordDocContents.Text;
+
+
+
+                    var ll1 = content.Split('\n');
                     bool vala = false;
                     bool found = false;
                     foreach (var item in ll1)
@@ -343,9 +373,9 @@ namespace ResumeApp.Controllers
                         }
                     }
                     
-                    var textExtractor = new TextExtractor();
-                    var wordDocContents = textExtractor.Extract(path);
-                    string content = wordDocContents.Text;
+                    //var textExtractor = new TextExtractor();
+                    //var wordDocContents = textExtractor.Extract(path);
+                    //string content = wordDocContents.Text;
 
                     content = Regex.Replace(content, @"\s+", " ").ToLower();
                     int chunkSize = 5100;
@@ -367,14 +397,14 @@ namespace ResumeApp.Controllers
                     //Removing values duplications in entities , to not have for example same profile with two entities of type Location that have the text "Marrakech"
                     pp = FixData(pp);
                     return pp;
-                }
+                //}
             }
             catch (Exception e)
             {
                 throw e;
             }
 
-        }
+}
         public Profile FixData(Profile pr)
         {
             var al = pr.Entities.GroupBy(x => x.Text);
@@ -391,7 +421,7 @@ namespace ResumeApp.Controllers
                         if (count)
                         {
                             pr.Entities.Remove(ent);
-                            ctx.Entities.Remove(ent);
+                            //ctx.Entities.Remove(ent);
                         }
                         count = true;
                     }
@@ -413,7 +443,7 @@ namespace ResumeApp.Controllers
                         if (newCount)
                         {
                             pr.KeyPhrases.Remove(kph);
-                            ctx.KeyPhrases.Remove(kph);
+                            //ctx.KeyPhrases.Remove(kph);
                         }
                         newCount = true;
                     }

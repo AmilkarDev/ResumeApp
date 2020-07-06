@@ -161,12 +161,12 @@ namespace ResumeApp.Controllers
             //_configuration = _builder.Build();
 
             // Pull the values from the appsettings.json file.
-            string searchServiceName = "mythirdsearch";
-            string queryApiKey = "5240DF267BD4477471B6C48D34C820AB";
+            string searchServiceName = "firstsearch";
+            string queryApiKey = "EC0AA0ABCDB1364490EBDD7F1F497C5E";
 
             // Create a service and index client.
             _serviceClient = new SearchServiceClient(searchServiceName, new SearchCredentials(queryApiKey));
-            _indexClient = _serviceClient.Indexes.GetClient("azureblob-index");
+            _indexClient = _serviceClient.Indexes.GetClient("firstindex");
         }
         private async Task<ActionResult> RunQueryAsync(SearchData model,SearchParameters parameters)
         {           

@@ -107,7 +107,7 @@ namespace ResumeApp.Controllers
             {
                 listProfiles = ctx.Profiles.ToList();
             }
-            var final = listProfiles.ToPagedList(pageNumber ?? 1, 2);
+            var final = listProfiles.ToPagedList(pageNumber ?? 1, 4);
             return PartialView(final);
         }
         public List<Profile> SearchOp()

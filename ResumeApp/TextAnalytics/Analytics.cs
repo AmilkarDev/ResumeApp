@@ -11,9 +11,10 @@ namespace ResumeApp.TextAnalytics
 {
     public static class Analytics
     {
-        static string endpoint = "https://westeurope.api.cognitive.microsoft.com";
-        static string apiKey = "516ae7cc49f6495587460c663ba5a175";
-        
+        static string endpoint = "https://resumeappalytics.cognitiveservices.azure.com/";
+        static string apiKey = "58dfe5d121844f0780d00f5e0fa6b5b9";
+
+
         public static async Task<List<Entity>> ExtractEntities(List<string> strr)
         {        
             var client = new TextAnalyticsClient(new Uri(endpoint), new AzureKeyCredential(apiKey));
