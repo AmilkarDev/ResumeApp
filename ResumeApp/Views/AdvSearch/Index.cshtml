@@ -14,10 +14,10 @@
     <br />
 
     <div class="text-center">
-        <button class="btn btn-primary" id="SearchOne" onclick="AnySearch()">Recherche générale</button>
-        <button class="btn btn-primary" id="SearchTwo" onclick="AllSearch()">Recherche Strict</button>
-        <button class="btn btn-primary" id="SearchTwo" onclick="WildCardSearch()">Recherche WildCard</button>
-        <button class="btn btn-primary" id="SearchTwo" onclick="FuzzySearch()">Recherche Fuzzy</button>
+        <button class="btn btn-primary" id="SearchOne" data-toggle="tooltip" title="considerer tous les mots du recherche individuellement et ensembles " onclick="AnySearch()">Recherche générale</button>
+        <button class="btn btn-primary" id="SearchTwo" data-toggle="tooltip" title="considerer  tous les mots du recherche une seule unite en respectant leurs ordres" onclick="AllSearch()">Recherche Strict</button>
+        <button class="btn btn-primary" id="SearchTwo" data-toggle="tooltip" title="considere  tous les mots debutant avec les lettres cites dans la zone du recherche"  onclick="WildCardSearch()">Recherche WildCard</button>
+        <button class="btn btn-primary" id="SearchTwo" data-toggle="tooltip" title="considerer tous les mots proches aux mots cites dans la zone du recherche : contient les meme lettre ou ayant des differences simples(recherche floue)"  onclick="FuzzySearch()">Recherche Fuzzy</button>
     </div>
 
     <br />
@@ -70,7 +70,6 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fermer</button>
-                <button type="button" class="btn btn-primary">Enregistrer</button>
             </div>
         </div>
     </div>
@@ -85,7 +84,12 @@
     $(document).ready(function () {
         $('.navbar-nav li a.active').removeClass('active');
         $(".navbar-nav li a[href='/AdvSearch']").addClass('active');
+        $('[data-toggle="tooltip"]').tooltip();
     });
+
+
+
+
     function AnySearch() {
         var searchTerm = $("#myInput").val();
         $.get("/advsearch/AnySearch/", { "searchTerm": searchTerm },

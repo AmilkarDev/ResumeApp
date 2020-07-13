@@ -24,8 +24,31 @@
                 }
             </div>
             <div class="panel-footer text-center">
-
+                <div class="panel-footer text-center">
+                    <button class="btn btn-primary" onclick="Download('@Model.resultList.Results[i].Document.metadata_storage_name')"> Télécharger </button>
+                    <button class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="Display('@Model.resultList.Results[i].Document.metadata_storage_name')"> Afficher </button>
+                    <button class="btn btn-primary" data-target="#detailsModal" data-toggle="modal" onclick="Details('@Model.resultList.Results[i].Document.metadata_storage_name')"> Détails  </button>
+                </div>
             </div>
         </div>
     }
 }
+<script>
+    function Details(filename) {
+        console.log(filename);
+            
+        var s = filename.indexOf(".");
+        var subStr = filename.substring(0, s);
+
+        $.get("/advsearch/Details/", { "filename": subStr },
+            function (data) { $('.modal-details').html(data); }
+        );
+    }
+
+    function Display(filename) {
+        $('#frima').attr('src', "https://firstaccount.blob.core.windows.net/firstcontainer/" + filename);
+    }
+    function Download(filename) {
+        window.open("https://firstaccount.blob.core.windows.net/firstcontainer/" + filename, '_blank');
+    }
+</script>

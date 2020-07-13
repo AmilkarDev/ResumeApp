@@ -39,23 +39,14 @@
         var subStr = filename.substring(0, s);
 
         $.get("/advsearch/Details/", { "filename": subStr },
-
             function (data) { $('.modal-details').html(data); }
         );
-       
     }
 
     function Display(filename) {
-            //var val = filename.replace("'", "");
-        $('#frima').attr('src', "https://amilkar.blob.core.windows.net/firstontainer/" + filename);
+        $('#frima').attr('src', "https://firstaccount.blob.core.windows.net/firstcontainer/" + filename);
     }
     function Download(filename) {
-
-        //    var myStr = cvFile.name;
-        //    var s = myStr.indexOf(".");
-        //var subStr = myStr.substring(0, s);
-        window.open("https://amilkar.blob.core.windows.net/firstontainer/" + filename, '_blank');
-        //window.location = "https://amilkar.blob.core.windows.net/firstontainer/" + filename;
-
+        window.open("https://firstaccount.blob.core.windows.net/firstcontainer/" + filename, '_blank');
     }
 </script>
