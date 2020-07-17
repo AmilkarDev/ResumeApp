@@ -277,9 +277,24 @@ namespace ResumeApp.Controllers
         {
             DirectoryInfo dirInfo = new DirectoryInfo(HostingEnvironment.MapPath("~/UploadedFiles"));
             var fullpath = Directory.GetFiles(dirInfo.FullName).Where(x => x.Contains(id)).FirstOrDefault();
-            string contentType = string.Empty;            
+            //var fullpath = fullpath + id + ".pdf";
+            string contentType = string.Empty;
             contentType = "application/pdf";
-            return File(fullpath, contentType, id+".pdf");
+            return File(fullpath, contentType, id + ".pdf");
+
+
+            //CloudStorageAccount storageAccount = CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=firstaccount;AccountKey=HG5VgrWBbgzdCXsQ1szWP1XI1XzCaHgOGbzSmo2So7wNxr19E2+EeVzVv/6l7lg6E7kJLkzSv7CjSSJVeKddJQ==;EndpointSuffix=core.windows.net");
+
+            //CloudBlobClient BlobClient = storageAccount.CreateCloudBlobClient();
+            //CloudBlobContainer storageContainer = BlobClient.GetContainerReference("firstcontainer");
+
+
+            //string fileName = id+".pdf";
+            //CloudBlockBlob blockBlob = storageContainer.GetBlockBlobReference(fileName);
+            //blockBlob.DownloadToFile("C:\\Users\\Amilkar\\Documents\\AppResumeDocs" + fileName, FileMode.Create);
+
+
+
         }
         public JsonResult removeFile(int Id)
         {

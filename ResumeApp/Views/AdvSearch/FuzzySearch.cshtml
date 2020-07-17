@@ -38,7 +38,7 @@
         var s = filename.indexOf(".");
         var subStr = filename.substring(0, s);
 
-        $.get("/advsearch/Details/", { "filename": subStr },
+        $.get("/AdvSearch/Details/", { "filename": subStr },
             function (data) { $('.modal-details').html(data); }
         );
     }

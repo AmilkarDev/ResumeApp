@@ -12,6 +12,33 @@
 
     </div>
 
+
+    <div class="row">
+
+
+
+
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Ajouter une compétence" id="newSkill" disabled>
+            <span class="input-group-btn">
+                <button class="btn btn-default" type="button" onclick="AddSkill()">Ajouter</button>
+            </span>
+        </div>
+        <br />
+        <div class="panel panel-primary">
+            <div class="panel-heading">Compétences</div>
+            <div class="panel-body" id="skills">
+                <p id="tts">Séléctionner une Base de connaissance</p>
+            </div>
+            <div class="panel-footer">
+                <button class="btn btn-info" onclick="saveSkills()"> Enregistrer </button>
+            </div>
+        </div>
+
+
+    </div>
+
+
     <div class="row">
         <div class="col-md-3">
 
@@ -34,9 +61,6 @@
             </div>
 
         </div>
-
-
-
         <div class="col-md-3">
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Ajouter un pays" id="newCountry" disabled>
@@ -57,8 +81,6 @@
 
 
         </div>
-
-
         <div class="col-md-3">
 
             <div class="input-group">
@@ -78,32 +100,7 @@
                 </div>
             </div>
         </div>
-
-
         <div class="col-md-3">
-
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Ajouter une compétence" id="newSkill" disabled>
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button" onclick="AddSkill()">Ajouter</button>
-                </span>
-            </div>
-            <br />
-            <div class="panel panel-primary">
-                <div class="panel-heading">Compétences</div>
-                <div class="panel-body" id="skills">
-                    <p id="tts">Séléctionner une Base de connaissance</p>
-                </div>
-                <div class="panel-footer">
-                    <button class="btn btn-info" onclick="saveSkills()"> Enregistrer </button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4"></div>
-        <div class="col-md-4">
-
             <div class="input-group">
                 <input type="text" class="form-control" placeholder="Ajouter un Titre " id="newTitle" disabled>
                 <span class="input-group-btn">
@@ -117,16 +114,11 @@
                     <p id="ttt">Séléctionner une Base de connaissance</p>
                 </div>
                 <div class="panel-footer">
-                    <button class="btn btn-info" onclick="saveTitles()" data-izimodal-open="#modall" data-izimodal-transitionin="fadeInDown" > Enregistrer </button>
+                    <button class="btn btn-info" onclick="saveTitles()" data-izimodal-open="#modall" data-izimodal-transitionin="fadeInDown"> Enregistrer </button>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            @*<button class="btn btn-info trigger"   data-izimodal-open="#modall" data-izimodal-transitionin="fadeInDown"> Enregistrer </button>*@
-
-        </div>
     </div>
-
 </div>
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -178,7 +170,7 @@
 
     $(document).ready(function () {
         $("#kbDiv").load("/KnowledgeBases/listKb");
-            $('.navbar-nav li a.active').removeClass('active');
+        $('.navbar-nav li a.active').removeClass('active');
         $(".navbar-nav li a[href='/KnowledgeBases']").addClass('active');
 
     });

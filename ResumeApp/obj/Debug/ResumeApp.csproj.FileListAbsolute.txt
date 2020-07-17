@@ -1,3 +1,4 @@
+C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.SwingAWT.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\ResumeApp.dll.config
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\ResumeApp.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\ResumeApp.pdb
@@ -50,6 +51,8 @@ C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\roslyn\VBCSCompiler.exe.co
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Antlr3.Runtime.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Azure.AI.TextAnalytics.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Azure.Core.dll
+C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Azure.Storage.Blobs.dll
+C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Azure.Storage.Common.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\EntityFramework.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\EntityFramework.SqlServer.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\IKVM.AWT.WinForms.dll
@@ -67,7 +70,6 @@ C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Naming.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Nashorn.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Remoting.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Security.dll
-C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.SwingAWT.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Text.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Tools.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Util.dll
@@ -84,10 +86,13 @@ C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\itextsharp.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.AspNet.Identity.Core.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.AspNet.Identity.EntityFramework.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.KeyVault.Core.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Search.Common.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Search.Data.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Search.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Search.Service.dll
+C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Storage.Blob.dll
+C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Storage.Common.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Owin.dll
@@ -130,11 +135,16 @@ C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\WebActivatorEx.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\WebGrease.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Azure.AI.TextAnalytics.xml
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Azure.Core.xml
+C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Azure.Storage.Blobs.xml
+C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Azure.Storage.Common.xml
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\itextsharp.xml
+C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.KeyVault.Core.xml
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Search.xml
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Search.Common.xml
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Search.Data.xml
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Search.Service.xml
+C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Storage.Blob.xml
+C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Storage.Common.xml
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Bcl.AsyncInterfaces.xml
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Rest.ClientRuntime.xml
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Rest.ClientRuntime.Azure.xml
@@ -185,13 +195,3 @@ C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\obj\Debug\ResumeApp.csproj.Cor
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\obj\Debug\ResumeApp.csproj.CopyComplete
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\obj\Debug\ResumeApp.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\obj\Debug\ResumeApp.pdb
-C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Azure.Storage.Blobs.dll
-C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Azure.Storage.Common.dll
-C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.KeyVault.Core.dll
-C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Storage.Blob.dll
-C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Storage.Common.dll
-C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Azure.Storage.Blobs.xml
-C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Azure.Storage.Common.xml
-C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.KeyVault.Core.xml
-C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Storage.Blob.xml
-C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Storage.Common.xml
