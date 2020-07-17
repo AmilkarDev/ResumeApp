@@ -1,4 +1,3 @@
-C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.SwingAWT.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\ResumeApp.dll.config
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\ResumeApp.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\ResumeApp.pdb
@@ -51,8 +50,6 @@ C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\roslyn\VBCSCompiler.exe.co
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Antlr3.Runtime.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Azure.AI.TextAnalytics.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Azure.Core.dll
-C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Azure.Storage.Blobs.dll
-C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Azure.Storage.Common.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\EntityFramework.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\EntityFramework.SqlServer.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\IKVM.AWT.WinForms.dll
@@ -70,6 +67,7 @@ C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Naming.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Nashorn.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Remoting.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Security.dll
+C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.SwingAWT.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Text.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Tools.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Util.dll
@@ -86,13 +84,10 @@ C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\itextsharp.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.AspNet.Identity.Core.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.AspNet.Identity.EntityFramework.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.AspNet.Identity.Owin.dll
-C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.KeyVault.Core.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Search.Common.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Search.Data.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Search.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Search.Service.dll
-C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Storage.Blob.dll
-C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Storage.Common.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Bcl.AsyncInterfaces.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Owin.dll
@@ -135,16 +130,11 @@ C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\WebActivatorEx.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\WebGrease.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Azure.AI.TextAnalytics.xml
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Azure.Core.xml
-C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Azure.Storage.Blobs.xml
-C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Azure.Storage.Common.xml
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\itextsharp.xml
-C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.KeyVault.Core.xml
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Search.xml
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Search.Common.xml
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Search.Data.xml
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Search.Service.xml
-C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Storage.Blob.xml
-C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Storage.Common.xml
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Bcl.AsyncInterfaces.xml
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Rest.ClientRuntime.xml
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Rest.ClientRuntime.Azure.xml
@@ -195,3 +185,210 @@ C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\obj\Debug\ResumeApp.csproj.Cor
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\obj\Debug\ResumeApp.csproj.CopyComplete
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\obj\Debug\ResumeApp.dll
 C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\obj\Debug\ResumeApp.pdb
+C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Azure.Storage.Blobs.dll
+C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Azure.Storage.Common.dll
+C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.KeyVault.Core.dll
+C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Storage.Blob.dll
+C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Storage.Common.dll
+C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Azure.Storage.Blobs.xml
+C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Azure.Storage.Common.xml
+C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.KeyVault.Core.xml
+C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Storage.Blob.xml
+C:\Users\Amilkar\source\repos\ResumeApp\ResumeApp\bin\Microsoft.Azure.Storage.Common.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\obj\Debug\ResumeApp.csprojAssemblyReference.cache
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\obj\Debug\ResumeApp.Migrations.InitialCreate.resources
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\obj\Debug\ResumeApp.Migrations.fixentityandkeyphrasetoprofilerelationship.resources
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\obj\Debug\ResumeApp.csproj.GenerateResource.cache
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\obj\Debug\ResumeApp.csproj.CoreCompileInputs.cache
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\obj\Debug\ResumeApp.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\obj\Debug\ResumeApp.pdb
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\ResumeApp.dll.config
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\ResumeApp.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\ResumeApp.pdb
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\csc.exe
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\csc.exe.config
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\csc.rsp
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\csi.exe
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\csi.exe.config
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\csi.rsp
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\Microsoft.Build.Tasks.CodeAnalysis.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\Microsoft.CodeAnalysis.CSharp.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\Microsoft.CodeAnalysis.CSharp.Scripting.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\Microsoft.CodeAnalysis.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\Microsoft.CodeAnalysis.Scripting.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\Microsoft.CodeAnalysis.VisualBasic.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\Microsoft.CSharp.Core.targets
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\Microsoft.DiaSymReader.Native.amd64.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\Microsoft.DiaSymReader.Native.x86.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\Microsoft.Managed.Core.targets
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\Microsoft.VisualBasic.Core.targets
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\System.AppContext.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\System.Collections.Immutable.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\System.Console.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\System.Diagnostics.FileVersionInfo.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\System.Diagnostics.StackTrace.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\System.IO.Compression.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\System.IO.FileSystem.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\System.IO.FileSystem.Primitives.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\System.IO.Pipes.AccessControl.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\System.IO.Pipes.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\System.Reflection.Metadata.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\System.Security.AccessControl.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\System.Security.Claims.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\System.Security.Cryptography.Algorithms.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\System.Security.Cryptography.Encoding.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\System.Security.Cryptography.Primitives.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\System.Security.Cryptography.X509Certificates.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\System.Security.Principal.Windows.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\System.Text.Encoding.CodePages.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\System.ValueTuple.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\System.Xml.ReaderWriter.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\System.Xml.XmlDocument.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\System.Xml.XPath.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\System.Xml.XPath.XDocument.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\vbc.exe
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\vbc.exe.config
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\vbc.rsp
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\VBCSCompiler.exe
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\roslyn\VBCSCompiler.exe.config
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Antlr3.Runtime.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Azure.AI.TextAnalytics.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Azure.Core.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Azure.Storage.Blobs.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Azure.Storage.Common.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\EntityFramework.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\EntityFramework.SqlServer.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.AWT.WinForms.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Beans.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Charsets.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Cldrdata.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Corba.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Core.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Jdbc.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Localedata.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Management.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Media.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Misc.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Naming.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Nashorn.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Remoting.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Security.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.SwingAWT.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Text.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Tools.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.Util.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.XML.API.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.XML.Bind.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.XML.Crypto.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.XML.Parse.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.XML.Transform.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.XML.WebServices.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.OpenJDK.XML.XPath.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.Runtime.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\IKVM.Runtime.JNI.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\itextsharp.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.AspNet.Identity.Core.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.AspNet.Identity.EntityFramework.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.AspNet.Identity.Owin.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Azure.KeyVault.Core.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Azure.Search.Common.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Azure.Search.Data.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Azure.Search.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Azure.Search.Service.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Azure.Storage.Blob.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Azure.Storage.Common.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Owin.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Owin.Host.SystemWeb.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Owin.Security.Cookies.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Owin.Security.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Owin.Security.Facebook.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Owin.Security.Google.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Owin.Security.MicrosoftAccount.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Owin.Security.OAuth.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Owin.Security.Twitter.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Rest.ClientRuntime.Azure.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Rest.ClientRuntime.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Spatial.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Web.Infrastructure.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\MoreLinq.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Newtonsoft.Json.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Owin.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\PagedList.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\PagedList.Mvc.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Buffers.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Diagnostics.DiagnosticSource.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Memory.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Numerics.Vectors.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Text.Encodings.Web.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Text.Json.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Threading.Tasks.Extensions.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.ValueTuple.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Web.Helpers.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Web.Mvc.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Web.Optimization.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Web.Razor.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Web.WebPages.Deployment.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Web.WebPages.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Web.WebPages.Razor.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\TikaOnDotNet.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\TikaOnDotNet.TextExtraction.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\WebActivatorEx.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\WebGrease.dll
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Azure.AI.TextAnalytics.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Azure.Core.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Azure.Storage.Blobs.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Azure.Storage.Common.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\itextsharp.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Azure.KeyVault.Core.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Azure.Search.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Azure.Search.Common.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Azure.Search.Data.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Azure.Search.Service.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Azure.Storage.Blob.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Azure.Storage.Common.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Rest.ClientRuntime.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Rest.ClientRuntime.Azure.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Spatial.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\MoreLinq.pdb
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\MoreLinq.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\PagedList.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\PagedList.Mvc.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Buffers.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Diagnostics.DiagnosticSource.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Memory.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Numerics.Vectors.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Text.Encodings.Web.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Text.Json.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Threading.Tasks.Extensions.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.ValueTuple.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Web.Helpers.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Web.Mvc.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Web.Optimization.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Web.Razor.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Web.WebPages.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Web.WebPages.Deployment.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\System.Web.WebPages.Razor.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Newtonsoft.Json.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\TikaOnDotNet.TextExtraction.pdb
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Antlr3.Runtime.pdb
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\EntityFramework.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\EntityFramework.SqlServer.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.AspNet.Identity.Core.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.AspNet.Identity.Owin.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.AspNet.Identity.EntityFramework.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Owin.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Owin.Host.SystemWeb.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Owin.Security.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Owin.Security.Facebook.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Owin.Security.Cookies.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Owin.Security.Google.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Owin.Security.Twitter.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.Owin.Security.OAuth.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\bin\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.xml
+C:\Users\Melek Ferhi\Desktop\ResumeApp\ResumeApp\obj\Debug\ResumeApp.csproj.CopyComplete
